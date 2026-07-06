@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { cottages, cottageSlugs } from '@/data/cottages';
-import { banyas } from '@/data/banyas';
+import { cottages as seedCottages, cottageSlugs } from '@/data/cottages';
+import { banyas as seedBanyas } from '@/data/banyas';
 import { BookingForm } from '@/components/BookingForm';
-import { getSettings } from '@/lib/content';
+import { getSettings, getAllCottages, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export async function generateStaticParams() {
@@ -13,13 +13,16 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const c = cottages.find((x) => x.slug === slug);
+  const all = await getAllCottages().catch(() => seedCottages);
+  const c = all.find((x) => x.slug === slug);
   if (!c) return { title: 'Не найдено' };
   return { title: c.seoTitle, description: c.seoDescription };
 }
 
 export default async function CottageDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const cottages = await getAllCottages().catch(() => seedCottages);
+  const banyas = await getAllBanyas().catch(() => seedBanyas);
   const c = cottages.find((x) => x.slug === slug);
   if (!c) notFound();
 

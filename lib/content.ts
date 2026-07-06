@@ -2,6 +2,9 @@ import { kv, isKvAvailable } from './kv';
 import { seedPosts } from '@/data/posts';
 import { defaultSettings, type SiteSettings } from '@/data/settings';
 import type { Post } from '@/data/posts';
+import { banyas as seedBanyas, type Banya } from '@/data/banyas';
+import { cottages as seedCottages, type Cottage } from '@/data/cottages';
+import { services as seedServices, type Service } from '@/data/services';
 
 const KEYS = {
   post: (id: string) => `post:${id}`,
@@ -11,6 +14,9 @@ const KEYS = {
   settings: 'site:settings',
   booking: (id: string) => `booking:${id}`,
   bookingsAll: 'bookings:all',
+  banyas: 'banyas:all',
+  cottages: 'cottages:all',
+  services: 'services:all',
 } as const;
 
 const POST_LIST_KEY = 'posts:list';
@@ -118,4 +124,67 @@ export async function updateBookingStatus(id: string, status: Booking['status'])
   if (!b) throw new Error('Booking not found');
   b.status = status;
   await kv().set(KEYS.booking(id), b);
+}
+
+// ─── Banyas ───
+export async function getAllBanyas(): Promise<Banya[]> {
+  if (!isKvAvailable()) return seedBanyas;
+  const raw = await kv().get<Banya[]>(KEYS.banyas);
+  return raw && raw.length ? raw : seedBanyas;
+}
+
+export async function getBanyaBySlug(slug: string): Promise<Banya | null> {
+  const all = await getAllBanyas();
+  return all.find((b) => b.slug === slug) || null;
+}
+
+export async function saveBanya(banya: Banya): Promise<void> {
+  if (!isKvAvailable()) throw new Error('KV not available');
+  const all = await getAllBanyas();
+  const idx = all.findIndex((b) => b.slug === banya.slug);
+  if (idx >= 0) all[idx] = banya;
+  else all.push(banya);
+  await kv().set(KEYS.banyas, all);
+}
+
+// ─── Cottages ───
+export async function getAllCottages(): Promise<Cottage[]> {
+  if (!isKvAvailable()) return seedCottages;
+  const raw = await kv().get<Cottage[]>(KEYS.cottages);
+  return raw && raw.length ? raw : seedCottages;
+}
+
+export async function getCottageBySlug(slug: string): Promise<Cottage | null> {
+  const all = await getAllCottages();
+  return all.find((c) => c.slug === slug) || null;
+}
+
+export async function saveCottage(cottage: Cottage): Promise<void> {
+  if (!isKvAvailable()) throw new Error('KV not available');
+  const all = await getAllCottages();
+  const idx = all.findIndex((c) => c.slug === cottage.slug);
+  if (idx >= 0) all[idx] = cottage;
+  else all.push(cottage);
+  await kv().set(KEYS.cottages, all);
+}
+
+// ─── Services ───
+export async function getAllServices(): Promise<Service[]> {
+  if (!isKvAvailable()) return seedServices;
+  const raw = await kv().get<Service[]>(KEYS.services);
+  return raw && raw.length ? raw : seedServices;
+}
+
+export async function getServiceBySlug(slug: string): Promise<Service | null> {
+  const all = await getAllServices();
+  return all.find((s) => s.slug === slug) || null;
+}
+
+export async function saveService(service: Service): Promise<void> {
+  if (!isKvAvailable()) throw new Error('KV not available');
+  const all = await getAllServices();
+  const idx = all.findIndex((s) => s.slug === service.slug);
+  if (idx >= 0) all[idx] = service;
+  else all.push(service);
+  await kv().set(KEYS.services, all);
 }

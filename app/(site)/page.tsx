@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { banyas } from '@/data/banyas';
-import { services } from '@/data/services';
-import { getPublishedOffers } from '@/lib/content';
-import { getSettings } from '@/lib/content';
+import { banyas as seedBanyas } from '@/data/banyas';
+import { services as seedServices } from '@/data/services';
+import { getPublishedOffers, getSettings, getAllBanyas, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export const revalidate = 3600;
@@ -10,6 +9,8 @@ export const revalidate = 3600;
 export default async function HomePage() {
   const settings = await getSettings().catch(() => defaultSettings);
   const offers = (await getPublishedOffers().catch(() => [])).slice(0, 2);
+  const banyas = await getAllBanyas().catch(() => seedBanyas);
+  const services = await getAllServices().catch(() => seedServices);
   const wa = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappText)}`;
 
   return (

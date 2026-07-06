@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type { SiteSettings } from '@/data/settings';
-import { banyas } from '@/data/banyas';
-import { cottages } from '@/data/cottages';
-import { services } from '@/data/services';
+import type { Banya } from '@/data/banyas';
+import type { Cottage } from '@/data/cottages';
+import type { Service } from '@/data/services';
 
 const VENIK_SVG = (
   <svg viewBox="0 0 64 80" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
@@ -18,7 +18,14 @@ const WA_SVG = (
   </svg>
 );
 
-export function Header({ settings }: { settings: SiteSettings }) {
+type HeaderProps = {
+  settings: SiteSettings;
+  banyas?: Banya[];
+  cottages?: Cottage[];
+  services?: Service[];
+};
+
+export function Header({ settings, banyas = [], cottages = [], services = [] }: HeaderProps) {
   return (
     <header className="site-header">
       <div className="header-inner">

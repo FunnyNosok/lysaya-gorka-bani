@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { banyas } from '@/data/banyas';
-import { getSettings } from '@/lib/content';
+import { banyas as seedBanyas } from '@/data/banyas';
+import { getSettings, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export const metadata: Metadata = {
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function BanyasPage() {
   const settings = await getSettings().catch(() => defaultSettings);
+  const banyas = await getAllBanyas().catch(() => seedBanyas);
 
   return (
     <>

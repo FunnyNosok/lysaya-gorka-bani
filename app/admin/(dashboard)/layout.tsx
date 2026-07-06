@@ -6,6 +6,9 @@ import { LogoutButton } from '@/components/LogoutButton';
 
 const ADMIN_NAV = [
   { href: '/admin', label: 'Дашборд' },
+  { href: '/admin/banyas', label: 'Бани' },
+  { href: '/admin/cottages', label: 'Коттеджи' },
+  { href: '/admin/services', label: 'Услуги' },
   { href: '/admin/posts', label: 'Акции и статьи' },
   { href: '/admin/bookings', label: 'Заявки' },
   { href: '/admin/settings', label: 'Настройки' },

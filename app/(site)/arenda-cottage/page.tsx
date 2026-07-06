@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { cottages } from '@/data/cottages';
-import { getSettings } from '@/lib/content';
+import { cottages as seedCottages } from '@/data/cottages';
+import { getSettings, getAllCottages } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export const metadata: Metadata = {
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function CottagesPage() {
   const settings = await getSettings().catch(() => defaultSettings);
+  const cottages = await getAllCottages().catch(() => seedCottages);
 
   return (
     <>

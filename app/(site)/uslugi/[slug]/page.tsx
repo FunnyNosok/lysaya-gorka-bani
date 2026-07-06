@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { services, serviceSlugs } from '@/data/services';
-import { getSettings } from '@/lib/content';
+import { services as seedServices, serviceSlugs } from '@/data/services';
+import { getSettings, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export async function generateStaticParams() {
@@ -11,13 +11,15 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const s = services.find((x) => x.slug === slug);
+  const all = await getAllServices().catch(() => seedServices);
+  const s = all.find((x) => x.slug === slug);
   if (!s) return { title: 'Не найдено' };
   return { title: s.seoTitle, description: s.seoDescription };
 }
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const services = await getAllServices().catch(() => seedServices);
   const s = services.find((x) => x.slug === slug);
   if (!s) notFound();
 

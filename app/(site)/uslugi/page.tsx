@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { services } from '@/data/services';
-import { getSettings } from '@/lib/content';
+import { services as seedServices } from '@/data/services';
+import { getSettings, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export const metadata: Metadata = {
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function ServicesPage() {
   const settings = await getSettings().catch(() => defaultSettings);
+  const services = await getAllServices().catch(() => seedServices);
 
   return (
     <>

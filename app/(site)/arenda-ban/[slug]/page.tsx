@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { banyas, banyaSlugs } from '@/data/banyas';
+import { banyas as seedBanyas, banyaSlugs } from '@/data/banyas';
 import { BookingForm } from '@/components/BookingForm';
-import { getSettings } from '@/lib/content';
+import { getSettings, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export async function generateStaticParams() {
@@ -12,13 +12,15 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const b = banyas.find((x) => x.slug === slug);
+  const all = await getAllBanyas().catch(() => seedBanyas);
+  const b = all.find((x) => x.slug === slug);
   if (!b) return { title: 'Не найдено' };
   return { title: b.seoTitle, description: b.seoDescription };
 }
 
 export default async function BanyaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const banyas = await getAllBanyas().catch(() => seedBanyas);
   const b = banyas.find((x) => x.slug === slug);
   if (!b) notFound();
 

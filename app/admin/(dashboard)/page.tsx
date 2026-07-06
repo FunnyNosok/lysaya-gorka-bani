@@ -49,8 +49,10 @@ export default async function AdminDashboard() {
         <div className="form-card">
           <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.3rem', marginBottom: '16px' }}>Быстрые действия</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <Link href="/admin/posts/new" className="btn btn--ember btn--block">Создать акцию / статью</Link>
-            <Link href="/admin/posts" className="btn btn--ghost btn--block">Все материалы</Link>
+            <Link href="/admin/banyas" className="btn btn--ember btn--block">Редактировать бани</Link>
+            <Link href="/admin/cottages" className="btn btn--ghost btn--block">Редактировать коттеджи</Link>
+            <Link href="/admin/services" className="btn btn--ghost btn--block">Редактировать услуги</Link>
+            <Link href="/admin/posts/new" className="btn btn--ghost btn--block">Создать акцию / статью</Link>
             <Link href="/admin/bookings" className="btn btn--ghost btn--block">Заявки на бронирование</Link>
             <Link href="/admin/settings" className="btn btn--ghost btn--block">Настройки сайта</Link>
           </div>
