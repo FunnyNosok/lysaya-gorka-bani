@@ -116,6 +116,11 @@ p{margin:0 0 1em}
 .btn--block{width:100%}
 .btn--lg{padding:17px 34px;font-size:1.05rem}
 .btn .ico{width:1.1em;height:1.1em;flex:0 0 auto}
+.btn--tg{background:#28a4e3;color:#fff;box-shadow:0 10px 24px -12px rgba(40,164,227,.7)}
+.btn--tg:hover{background:#1e93cf;transform:translateY(-2px)}
+.btn--max{background:linear-gradient(135deg,#6d5cf6,#8f5cf6);color:#fff;box-shadow:0 10px 24px -12px rgba(125,92,246,.7)}
+.btn--max:hover{filter:brightness(1.05);transform:translateY(-2px)}
+.btn--tg svg,.btn--max svg{width:1.15em;height:1.15em;flex:0 0 auto}
 
 /* ---------- header ---------- */
 .site-header{
@@ -159,10 +164,21 @@ p{margin:0 0 1em}
 .header-phone{display:flex;flex-direction:column;line-height:1.1;text-align:right}
 .header-phone b{font-family:var(--ff-display);font-size:1.12rem;color:var(--cream)}
 .header-phone small{font-size:.72rem;color:rgba(245,235,214,.6);letter-spacing:.04em}
-.wa-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
-  background:#25d366;color:#fff;font-weight:700;font-size:.86rem;box-shadow:0 8px 18px -8px rgba(37,211,102,.6)}
-.wa-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.wa-btn svg{width:1.1em;height:1.1em}
+.msg-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;
+  color:#fff;font-weight:700;font-size:.86rem;transition:filter .2s,transform .2s}
+.msg-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.msg-btn svg{width:1.15em;height:1.15em;flex:0 0 auto}
+.msg-btn--tg{background:#28a4e3;box-shadow:0 8px 18px -8px rgba(40,164,227,.6)}
+.msg-btn--max{background:linear-gradient(135deg,#6d5cf6,#8f5cf6);box-shadow:0 8px 18px -8px rgba(125,92,246,.6)}
+.msg-btn--call{background:linear-gradient(180deg,var(--ember),var(--ember-deep));box-shadow:0 8px 18px -8px rgba(210,96,42,.6)}
+
+/* booking contact block (замена формы записи) */
+.booking-contact{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.booking-contact__title{font-family:var(--ff-display);font-size:1.3rem;margin:0}
+.booking-contact__lead{color:var(--ink-soft);font-size:.9rem;margin:0 0 4px}
+.booking-contact .btn svg{width:1.15em;height:1.15em;flex:0 0 auto}
+.booking-contact .form-note{margin-top:6px}
+.booking-contact .form-note a{color:var(--ember);font-weight:700}
 
 .nav-toggle{display:none;width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;color:var(--cream)}
 .nav-toggle span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;position:relative}
@@ -470,27 +486,31 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
 
 /* ---- mobile (≤900) ---- */
 @media (max-width:900px){
-  .nav,.header-phone{display:none}
+  .header-phone{display:none}
   .nav-toggle{display:flex}
 
-  /* header */
+  /* header: держим шапку (лого, кнопки, бургер) над оверлеем меню */
   .header-inner{gap:10px;padding:10px 16px}
+  .brand,.header-cta,.nav-toggle{position:relative;z-index:70}
   .brand .venik{font-size:28px}
   .brand-name{font-size:1.05rem}
   .brand-sub{font-size:.82rem}
-  .header-cta .wa-btn{padding:9px 12px;font-size:.8rem}
-  .header-cta .wa-btn svg{width:1em;height:1em}
+  .header-cta{gap:8px}
+  .header-cta .msg-btn{padding:9px 12px;font-size:.8rem}
+  .header-cta .msg-btn svg{width:1.1em;height:1.1em}
+  /* при открытом меню прячем кнопки-мессенджеры, чтобы не перекрывали список */
+  body.nav-open .header-cta{display:none}
 
-  /* full-screen nav */
+  /* полноэкранное меню: оверлей под шапкой (z:50), бургер-крестик остаётся кликабельным */
   .nav{
-    position:fixed;top:0;left:0;right:0;bottom:0;
+    display:flex;position:fixed;inset:0;z-index:50;
     flex-direction:column;align-items:stretch;
-    background:var(--bark);padding:64px 18px 24px;gap:2px;overflow-y:auto;
+    background:var(--bark);padding:calc(64px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));gap:2px;overflow-y:auto;
     transform:translateX(100%);transition:transform .32s var(--ease);margin:0;
-    border-top:1px solid rgba(200,137,58,.18);
+    visibility:hidden;pointer-events:none;
     -webkit-overflow-scrolling:touch;
   }
-  body.nav-open .nav{display:flex;transform:none}
+  body.nav-open .nav{transform:none;visibility:visible;pointer-events:auto}
   body.nav-open{overflow:hidden}
   .nav>a,.nav .has-sub>a{
     padding:16px 8px;font-size:1.08rem;border-bottom:1px solid rgba(245,235,214,.08);
@@ -608,13 +628,14 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   body{font-size:16px;line-height:1.6}
   .container{padding-inline:16px}
 
-  /* header — hide WhatsApp text, keep icon only */
+  /* header — на телефоне только иконка звонка + бургер, мессенджеры в футере/контактах */
   .header-inner{padding:8px 14px;gap:8px}
   .brand .venik{font-size:24px}
   .brand-name{font-size:.98rem}
   .brand-sub{font-size:.76rem}
-  .header-cta .wa-btn{padding:9px 11px;font-size:0}
-  .header-cta .wa-btn svg{width:1.15em;height:1.15em}
+  .header-cta .msg-btn--tg,.header-cta .msg-btn--max{display:none}
+  .header-cta .msg-btn--call{padding:9px 11px;font-size:0;gap:0}
+  .header-cta .msg-btn--call svg{width:1.2em;height:1.2em}
   .nav-toggle{width:40px;height:40px}
 
   /* hero */
@@ -687,7 +708,6 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
 /* ---- safe area (notch / home bar) ---- */
 @supports (padding:max(0px)){
   .site-header{padding-top:max(0px,env(safe-area-inset-top))}
-  .nav{padding-top:max(64px,calc(64px + env(safe-area-inset-top)))}
   .hero-inner{padding-top:max(48px,calc(48px + env(safe-area-inset-top)))}
   .site-footer{padding-bottom:max(28px,calc(28px + env(safe-area-inset-bottom)))}
   .lb-close{top:max(14px,env(safe-area-inset-top))}

@@ -71,17 +71,20 @@ export function SettingsEditor({ initial }: { initial: SiteSettings }) {
           </div>
           <div className="field" style={{ marginBottom: 0 }}>
             <label>Телефон 2 (tel:)</label>
-            <input value={form.phone2Href} onChange={(e) => set('phone2Href', e.target.value)} style={inputStyle} placeholder="+79530477577" />
+            <input value={form.phone2Href} onChange={(e) => set('phone2Href', e.target.value)} style={inputStyle} placeholder="+79530477757" />
           </div>
         </div>
 
+        <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.2rem', margin: '24px 0 16px' }}>Мессенджеры</h3>
         <div className="field">
-          <label>WhatsApp (номер без +)</label>
-          <input value={form.whatsapp} onChange={(e) => set('whatsapp', e.target.value)} style={inputStyle} placeholder="79530477577" />
+          <label>Telegram — ссылка</label>
+          <input value={form.telegram} onChange={(e) => set('telegram', e.target.value)} style={inputStyle} placeholder="https://t.me/username" />
+          <p className="form-note">Полная ссылка вида https://t.me/username. Кнопка Telegram появится на сайте только если поле заполнено.</p>
         </div>
         <div className="field">
-          <label>Текст WhatsApp по умолчанию</label>
-          <input value={form.whatsappText} onChange={(e) => set('whatsappText', e.target.value)} style={inputStyle} />
+          <label>MAX — ссылка</label>
+          <input value={form.max} onChange={(e) => set('max', e.target.value)} style={inputStyle} placeholder="https://max.ru/u/…" />
+          <p className="form-note">В MAX нет ссылок по номеру. Скопируйте ссылку на профиль в приложении: аватар → QR-код → «Поделиться». Кнопка появится только если поле заполнено.</p>
         </div>
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.2rem', margin: '24px 0 16px' }}>Адрес</h3>

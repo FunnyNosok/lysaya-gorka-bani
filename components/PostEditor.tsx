@@ -369,27 +369,16 @@ export function PostEditor({ post, existingSlugs }: Props) {
 
         {form.type === 'offer' && (
           <>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
-              <div className="field" style={{ marginBottom: 0 }}>
-                <label>Текст кнопки</label>
-                <input
-                  type="text"
-                  value={form.ctaText || ''}
-                  onChange={(e) => set('ctaText', e.target.value)}
-                  placeholder="Воспользоваться"
-                  style={inputStyle}
-                />
-              </div>
-              <div className="field" style={{ marginBottom: 0 }}>
-                <label>WhatsApp-текст кнопки</label>
-                <input
-                  type="text"
-                  value={form.ctaWhatsappText || ''}
-                  onChange={(e) => set('ctaWhatsappText', e.target.value)}
-                  placeholder="Здравствуйте! Хочу забронировать баню..."
-                  style={inputStyle}
-                />
-              </div>
+            <div className="field">
+              <label>Текст кнопки</label>
+              <input
+                type="text"
+                value={form.ctaText || ''}
+                onChange={(e) => set('ctaText', e.target.value)}
+                placeholder="Воспользоваться"
+                style={inputStyle}
+              />
+              <p className="form-note">Кнопка ведёт на звонок по телефону из настроек.</p>
             </div>
             <div className="field">
               <label>Примечание (мелкий шрифт)</label>

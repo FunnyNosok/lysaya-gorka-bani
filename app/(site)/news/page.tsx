@@ -4,6 +4,7 @@ import { getPublishedPosts } from '@/lib/content';
 import { seedPosts } from '@/data/posts';
 import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { ContactButtons } from '@/components/Contact';
 
 export const revalidate = 3600;
 
@@ -42,7 +43,7 @@ export default async function NewsPage() {
                   <h3>{p.title}</h3>
                   <p>{p.excerpt}</p>
                   {p.ctaText && p.type === 'offer' ? (
-                    <a className="btn btn--ember" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(p.ctaWhatsappText || settings.whatsappText)}`} target="_blank" rel="noopener noreferrer">{p.ctaText}</a>
+                    <a className="btn btn--ember" href={`tel:${settings.phone2Href}`}>{p.ctaText}</a>
                   ) : (
                     <Link className="more" href={`/news/${p.slug}`}>Читать полностью <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></Link>
                   )}
@@ -58,10 +59,7 @@ export default async function NewsPage() {
         <div className="container cta-band__inner reveal">
           <h2>Воспользуйтесь акцией</h2>
           <p>Бронируйте баню заранее и получайте бонусы — лёгкого пара!</p>
-          <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappText)}`} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
-          </div>
+          <ContactButtons settings={settings} />
           <a className="cta-band__phone" href={`tel:${settings.phoneHref}`}>{settings.phone}</a>
         </div>
       </section>

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { banyas as seedBanyas } from '@/data/banyas';
 import { getSettings, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { ContactButtons } from '@/components/Contact';
 
 export const metadata: Metadata = {
   title: 'Аренда русской бани в Екатеринбурге — бани «Лысой горки»',
@@ -44,7 +45,7 @@ export default async function BanyasPage() {
                   <span className="cap">{b.shortDescription}</span>
                   <ul className="banya-feats">{b.features.map((f) => <li key={f}>{f}</li>)}</ul>
                   <div className="banya-card__cta">
-                    <a className="btn btn--ember" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Хочу забронировать баню ' + b.shortTitle + '.')}`} target="_blank" rel="noopener noreferrer">Заказать</a>
+                    <a className="btn btn--ember" href={`tel:${settings.phone2Href}`}>Заказать</a>
                     <Link className="btn btn--ghost" href={`/arenda-ban/${b.slug}`}>Подробнее</Link>
                   </div>
                 </div>
@@ -73,10 +74,7 @@ export default async function BanyasPage() {
         <div className="container cta-band__inner reveal">
           <h2>Не знаете, какую баню выбрать?</h2>
           <p>Позвоните — подберём домик под вашу компанию и повод.</p>
-          <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Помогите выбрать баню.')}`} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
-          </div>
+          <ContactButtons settings={settings} />
           <a className="cta-band__phone" href={`tel:${settings.phoneHref}`}>{settings.phone}</a>
         </div>
       </section>

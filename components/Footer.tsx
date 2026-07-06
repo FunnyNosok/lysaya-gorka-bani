@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { SiteSettings } from '@/data/settings';
 import { banyas } from '@/data/banyas';
 import { services } from '@/data/services';
+import { TG_SVG, MAX_SVG } from '@/components/Contact';
 
 const VENIK_SVG = (
   <svg viewBox="0 0 64 80" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
@@ -27,9 +28,12 @@ export function Footer({ settings }: { settings: SiteSettings }) {
               <a href={settings.vk} target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.8 16.8c-5 0-8.3-3.6-8.4-9.4h2.6c.1 4.3 2 6.1 3.4 6.5V7.4h2.5v3.7c1.4-.2 2.9-1.8 3.4-3.7h2.5c-.4 2.2-1.9 3.8-3 4.5 1.1.6 2.8 2 3.5 4.9h-2.7c-.5-1.8-1.9-3.2-3.7-3.4v3.4h-.4Z" /></svg>
               </a>
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
-              </a>
+              {settings.telegram && (
+                <a href={settings.telegram} target="_blank" rel="noopener noreferrer" aria-label="Telegram">{TG_SVG}</a>
+              )}
+              {settings.max && (
+                <a href={settings.max} target="_blank" rel="noopener noreferrer" aria-label="MAX">{MAX_SVG}</a>
+              )}
             </div>
           </div>
           <div className="footer-col">
@@ -53,7 +57,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 4h4l2 5-2 1c1 3 3 5 6 6l1-2 5 2v4c0 1-1 2-2 2A16 16 0 0 1 3 6c0-1 1-2 2-2Z" /></svg>
-                <a href={`tel:${settings.phoneHref}`}>{settings.phone}</a>
+                <span><a href={`tel:${settings.phoneHref}`}>{settings.phone}</a><br /><a href={`tel:${settings.phone2Href}`}>{settings.phone2}</a></span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" /></svg>

@@ -26,7 +26,7 @@ export default async function AdminBookingsPage() {
     <div>
       <h1 style={{ fontFamily: 'var(--ff-display)', fontSize: '2rem', marginBottom: '8px' }}>Заявки</h1>
       <p style={{ color: 'var(--ink-soft)', fontSize: '.9rem', marginBottom: '24px' }}>
-        Заявки с формы бронирования. Каждая также дублируется в WhatsApp.
+        Заявки на бронирование. Приём заявок теперь идёт по телефону, в Telegram и MAX — раздел сохранён для истории ранее оставленных заявок.
       </p>
 
       {!kvOk && (

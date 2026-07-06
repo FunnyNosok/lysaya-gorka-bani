@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { services as seedServices } from '@/data/services';
 import { getSettings, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { ContactButtons } from '@/components/Contact';
 
 export const metadata: Metadata = {
   title: 'Дополнительные услуги — кафе, бассейн, парильщик, массаж, СПА | Лысая горка',
@@ -53,7 +54,7 @@ export default async function ServicesPage() {
           <div style={{ textAlign: 'center' }} className="reveal">
             <img src="/images/services/banket.jpg" alt="Банкетный зал" style={{ borderRadius: '16px', maxWidth: '880px', boxShadow: '0 24px 50px -20px rgba(0,0,0,.6)', margin: '0 auto' }} />
             <div style={{ marginTop: '26px' }}>
-              <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Хочу арендовать банкетный зал.')}`} target="_blank" rel="noopener noreferrer">Арендовать банкетный зал</a>
+              <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>Арендовать банкетный зал</a>
             </div>
           </div>
         </div>
@@ -64,10 +65,7 @@ export default async function ServicesPage() {
         <div className="container cta-band__inner reveal">
           <h2>Закажите услуги к бане</h2>
           <p>Парильщик, массаж, кафе и бассейн — добавьте к отдыху всё, что хочется.</p>
-          <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Хочу заказать услугу.')}`} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
-          </div>
+          <ContactButtons settings={settings} />
           <a className="cta-band__phone" href={`tel:${settings.phoneHref}`}>{settings.phone}</a>
         </div>
       </section>

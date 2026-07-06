@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { banyas as seedBanyas, banyaSlugs } from '@/data/banyas';
-import { BookingForm } from '@/components/BookingForm';
+import { BookingContact } from '@/components/Contact';
 import { getSettings, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
@@ -72,7 +72,7 @@ export default async function BanyaDetailPage({ params }: { params: Promise<{ sl
                   ))}
                 </div>
                 <p className="note">{b.priceNote}</p>
-                <BookingForm banya={b.shortTitle} settings={settings} defaultPeople={String(b.capacity)} />
+                <BookingContact settings={settings} object={b.shortTitle} />
               </div>
             </aside>
           </div>

@@ -5,6 +5,7 @@ import { getPublishedPosts, getPostBySlug } from '@/lib/content';
 import { seedPosts } from '@/data/posts';
 import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { ContactButtons } from '@/components/Contact';
 
 export const revalidate = 3600;
 
@@ -63,8 +64,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <p style={{ fontSize: '.84rem', color: 'var(--ink-soft)' }}>{post.note}</p>
               )}
               {post.ctaText && post.type === 'offer' && (
-                <div style={{ marginTop: '16px' }}>
-                  <a className="btn btn--ember" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(post.ctaWhatsappText || settings.whatsappText)}`} target="_blank" rel="noopener noreferrer">{post.ctaText}</a>
+                <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <a className="btn btn--ember" href={`tel:${settings.phone2Href}`}>{post.ctaText}</a>
+                  {settings.telegram && (
+                    <a className="btn btn--tg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+                  )}
                 </div>
               )}
             </div>
@@ -77,10 +81,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <div className="container cta-band__inner reveal">
           <h2>Лёгкого пара!</h2>
           <p>Бронируйте баню заранее — подберём идеальный домик под вашу компанию.</p>
-          <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappText)}`} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
-          </div>
+          <ContactButtons settings={settings} />
         </div>
       </section>
     </>

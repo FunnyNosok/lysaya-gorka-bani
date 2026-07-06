@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
 import { getSettings, saveSettings } from '@/lib/content';
 import { settingsSchema } from '@/lib/validators';
@@ -22,6 +23,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Ошибка валидации', details: parsed.error.flatten() }, { status: 400 });
     }
     await saveSettings(parsed.data);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true, settings: parsed.data });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

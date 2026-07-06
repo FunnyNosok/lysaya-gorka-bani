@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
 import { getAllBanyas, saveBanya } from '@/lib/content';
 
@@ -20,6 +21,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'slug и title обязательны' }, { status: 400 });
     }
     await saveBanya(body);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

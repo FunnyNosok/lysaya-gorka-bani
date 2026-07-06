@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
 import { getAllPosts, savePost } from '@/lib/content';
 import { postSchema, slugify, formatDateLabel } from '@/lib/validators';
@@ -51,6 +52,7 @@ export async function POST(req: NextRequest) {
     }
 
     await savePost(parsed.data);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true, post: parsed.data });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

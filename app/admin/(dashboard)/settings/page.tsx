@@ -10,7 +10,7 @@ export default async function AdminSettingsPage() {
     <div>
       <h1 style={{ fontFamily: 'var(--ff-display)', fontSize: '2rem', marginBottom: '8px' }}>Настройки сайта</h1>
       <p style={{ color: 'var(--ink-soft)', fontSize: '.9rem', marginBottom: '24px' }}>
-        Телефоны, адрес, WhatsApp, соцсети и карта. Изменения применяются на всех страницах.
+        Телефоны, адрес, Telegram, MAX, соцсети и карта. Изменения применяются на всех страницах.
       </p>
       <SettingsEditor initial={settings} />
     </div>

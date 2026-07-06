@@ -84,8 +84,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   {s.plaqueNote && <p className="note" style={{ margin: '14px 0 0' }}>{s.plaqueNote}</p>}
                 </div>
               )}
-              <div style={{ marginTop: '24px' }}>
-                <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(s.ctaWhatsappText)}`} target="_blank" rel="noopener noreferrer">{s.ctaText}</a>
+              <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
+                {settings.telegram && (
+                  <a className="btn btn--tg btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+                )}
               </div>
             </div>
           </div>

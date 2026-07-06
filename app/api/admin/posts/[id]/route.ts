@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
 import { getPostById, savePost, deletePost } from '@/lib/content';
 import { postSchema, formatDateLabel, slugify } from '@/lib/validators';
@@ -52,6 +53,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     await savePost(parsed.data);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true, post: parsed.data });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {
@@ -66,6 +68,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     await requireAuth();
     const { id } = await params;
     await deletePost(id);
+    revalidatePath('/', 'layout');
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

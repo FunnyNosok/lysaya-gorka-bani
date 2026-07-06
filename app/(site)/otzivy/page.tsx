@@ -46,10 +46,13 @@ export default async function ReviewsPage() {
         <div className="steam" aria-hidden="true"><i></i><i></i><i></i></div>
         <div className="container cta-band__inner reveal">
           <h2>Оставьте свой отзыв</h2>
-          <p>Понравилось у нас? Напишите нам в WhatsApp — будем рады вашим впечатлениям.</p>
+          <p>Понравилось у нас? Напишите нам в Telegram или ВКонтакте — будем рады вашим впечатлениям.</p>
           <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Хочу оставить отзыв.')}`} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={settings.vk} target="_blank" rel="noopener noreferrer">Мы ВКонтакте</a>
+            {settings.telegram && (
+              <a className="btn btn--tg btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            )}
+            <a className="btn btn--ember btn--lg" href={settings.vk} target="_blank" rel="noopener noreferrer">Мы ВКонтакте</a>
+            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
           </div>
         </div>
       </section>

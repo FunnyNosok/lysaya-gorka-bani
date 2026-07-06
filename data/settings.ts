@@ -3,8 +3,8 @@ export type SiteSettings = {
   phoneHref: string;
   phone2: string;
   phone2Href: string;
-  whatsapp: string;
-  whatsappText: string;
+  telegram: string;
+  max: string;
   address: string;
   addressArea: string;
   email: string;
@@ -20,10 +20,12 @@ export type SiteSettings = {
 export const defaultSettings: SiteSettings = {
   phone: '+7 (343) 213-75-77',
   phoneHref: '+73432137577',
-  phone2: '+7 (953) 047-75-77',
-  phone2Href: '+79530477577',
-  whatsapp: '79530477577',
-  whatsappText: 'Здравствуйте! Хочу забронировать баню.',
+  phone2: '+7 (953) 047-77-57',
+  phone2Href: '+79530477757',
+  // Ссылки на мессенджеры. Заполняются в админке (Настройки).
+  // Telegram: https://t.me/username · MAX: https://max.ru/u/<хеш из приложения>
+  telegram: '',
+  max: '',
   address: 'Екатеринбург, Предельная, 41',
   addressArea: 'район УНЦ',
   email: 'nagorke@list.ru',

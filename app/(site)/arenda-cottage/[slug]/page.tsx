@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { cottages as seedCottages, cottageSlugs } from '@/data/cottages';
 import { banyas as seedBanyas } from '@/data/banyas';
-import { BookingForm } from '@/components/BookingForm';
+import { BookingContact } from '@/components/Contact';
 import { getSettings, getAllCottages, getAllBanyas } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
@@ -66,15 +66,7 @@ export default async function CottageDetailPage({ params }: { params: Promise<{ 
                   <div className="plank-row" key={r.label}><span>{r.label}</span><b>{r.value}</b></div>
                 ))}
                 <p className="note">{c.priceNote}</p>
-                <BookingForm
-                  banya={c.title}
-                  settings={settings}
-                  dateLabel={c.dateFieldLabel}
-                  datePlaceholder={c.dateFieldPlaceholder}
-                  submitLabel={c.submitLabel}
-                  showHours={false}
-                  defaultPeople={String(c.capacity)}
-                />
+                <BookingContact settings={settings} object={c.shortTitle} />
               </div>
             </aside>
           </div>

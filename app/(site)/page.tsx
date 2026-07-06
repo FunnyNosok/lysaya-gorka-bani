@@ -3,6 +3,7 @@ import { banyas as seedBanyas } from '@/data/banyas';
 import { services as seedServices } from '@/data/services';
 import { getPublishedOffers, getSettings, getAllBanyas, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { ContactButtons } from '@/components/Contact';
 
 export const revalidate = 3600;
 
@@ -11,7 +12,6 @@ export default async function HomePage() {
   const offers = (await getPublishedOffers().catch(() => [])).slice(0, 2);
   const banyas = await getAllBanyas().catch(() => seedBanyas);
   const services = await getAllServices().catch(() => seedServices);
-  const wa = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappText)}`;
 
   return (
     <>
@@ -24,7 +24,10 @@ export default async function HomePage() {
           <p className="hero-sub">Настоящая баня на дровах, ароматные веники, профессиональные парильщики и уютная территория с бассейном и кафе. Отдохните с удовольствием — лёгкого вам пара!</p>
           <div className="hero-actions">
             <a className="btn btn--ember btn--lg" href="#bani">Выбрать баню</a>
-            <a className="btn btn--ghost-light btn--lg" href={wa} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+            {settings.telegram && (
+              <a className="btn btn--ghost-light btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            )}
+            <a className="btn btn--ghost-light btn--lg" href={`tel:${settings.phone2Href}`}>Позвонить</a>
           </div>
           <div className="hero-meta">
             <span className="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg><span><b>{settings.address}</b>{settings.addressArea}</span></span>
@@ -67,7 +70,7 @@ export default async function HomePage() {
                   <span className="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6" /></svg>{b.card}</span>
                   <ul className="banya-feats">{b.features.map((f) => <li key={f}>{f}</li>)}</ul>
                   <div className="banya-card__cta">
-                    <a className="btn btn--ember" href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('Здравствуйте! Хочу забронировать баню ' + b.shortTitle + '.')}`} target="_blank" rel="noopener noreferrer">Заказать</a>
+                    <a className="btn btn--ember" href={`tel:${settings.phone2Href}`}>Заказать</a>
                     <Link className="btn btn--ghost" href={`/arenda-ban/${b.slug}`}>Подробнее</Link>
                   </div>
                 </div>
@@ -146,10 +149,7 @@ export default async function HomePage() {
           <span className="eyebrow eyebrow--center">Лёгкого пара</span>
           <h2>Забронируйте баню заранее</h2>
           <p>Чтобы быть уверенным в наличии мест и времени, оставьте заявку — и мы подберём идеальный домик под вашу компанию.</p>
-          <div className="cta-band__actions">
-            <a className="btn btn--ember btn--lg" href={wa} target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
-            <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>
-          </div>
+          <ContactButtons settings={settings} />
           <a className="cta-band__phone" href={`tel:${settings.phoneHref}`}>{settings.phone}</a>
         </div>
       </section>

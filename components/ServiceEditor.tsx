@@ -145,9 +145,10 @@ export function ServiceEditor({ initial }: { initial: Service }) {
         </div>
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.15rem', margin: '20px 0 14px' }}>Кнопка действия</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
-          <div><label>Текст кнопки</label><input value={form.ctaText} onChange={(e) => set('ctaText', e.target.value)} style={inputStyle} /></div>
-          <div><label>Текст для WhatsApp</label><input value={form.ctaWhatsappText} onChange={(e) => set('ctaWhatsappText', e.target.value)} style={inputStyle} /></div>
+        <div style={{ marginBottom: '14px' }}>
+          <label>Текст кнопки</label>
+          <input value={form.ctaText} onChange={(e) => set('ctaText', e.target.value)} style={inputStyle} />
+          <p className="form-note" style={{ marginTop: '6px' }}>Кнопка ведёт на звонок по телефону из настроек.</p>
         </div>
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.15rem', margin: '20px 0 14px' }}>SEO</h3>
