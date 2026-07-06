@@ -16,7 +16,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Неверный логин или пароль' }, { status: 401 });
     }
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    if (e instanceof Error && e.message.includes('Слишком много')) {
+      return NextResponse.json({ error: e.message }, { status: 429 });
+    }
     return NextResponse.json(
       { error: 'Авторизация недоступна — задайте ADMIN_LOGIN, ADMIN_PASSWORD и AUTH_SECRET в переменных окружения' },
       { status: 500 }

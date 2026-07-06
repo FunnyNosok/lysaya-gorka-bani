@@ -117,7 +117,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </section>
       )}
 
-      {s.menuImage && (
+      {s.menuImages && s.menuImages.length > 0 && (
         <section className="section">
           <div className="container">
             <div className="section-head section-head--center reveal">
@@ -125,16 +125,18 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               <h2>Наше меню</h2>
               <p className="lead">Холодные закуски, салаты, супы, горячие блюда, десерты и напитки.</p>
             </div>
-            <div className="reveal" style={{ textAlign: 'center' }}>
-              <a href={s.menuImage} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={s.menuImage}
-                  alt="Меню кафе"
-                  style={{ maxWidth: '100%', borderRadius: '16px', boxShadow: 'var(--shadow-card)', margin: '0 auto' }}
-                />
-              </a>
-              <p style={{ marginTop: '14px', fontSize: '.88rem', color: 'var(--ink-soft)' }}>
-                Нажмите на изображение, чтобы открыть меню в полном размере
+            <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center' }}>
+              {s.menuImages.map((img, i) => (
+                <a key={img} href={img} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+                  <img
+                    src={img}
+                    alt={`Меню кафе — страница ${i + 1}`}
+                    style={{ maxWidth: '100%', borderRadius: '16px', boxShadow: 'var(--shadow-card)' }}
+                  />
+                </a>
+              ))}
+              <p style={{ marginTop: '4px', fontSize: '.88rem', color: 'var(--ink-soft)' }}>
+                Нажмите на изображение, чтобы открыть в полном размере
               </p>
             </div>
           </div>

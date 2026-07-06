@@ -25,6 +25,7 @@ export type Service = {
   plaqueNote?: string;
   gallery?: { src: string; alt: string; cls: string }[];
   menuImage?: string;
+  menuImages?: string[];
   seoTitle: string;
   seoDescription: string;
 };
@@ -109,6 +110,7 @@ export const services: Service[] = [
     ctaText: 'Арендовать кафе',
     ctaWhatsappText: 'Здравствуйте! Хочу арендовать кафе.',
     menuImage: '/images/menu/menu-1.jpg',
+    menuImages: ['/images/menu/menu-1.jpg', '/images/menu/menu-2.jpg'],
     gallery: [
       { src: '/images/services/kafe.jpg', alt: '', cls: 'w2' },
       { src: '/images/services/eda.png', alt: 'Еда в бане', cls: 'h2' },

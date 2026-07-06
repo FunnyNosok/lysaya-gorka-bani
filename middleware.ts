@@ -7,18 +7,24 @@ const PUBLIC_API_PATHS = ['/api/admin/login', '/api/admin/logout'];
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Security headers for all responses
+  const res = NextResponse.next();
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+  res.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
   if (pathname.startsWith('/api/admin/')) {
-    if (PUBLIC_API_PATHS.some((p) => pathname === p)) return NextResponse.next();
+    if (PUBLIC_API_PATHS.some((p) => pathname === p)) return res;
     const cookie = req.cookies.get(SESSION_COOKIE);
     if (!cookie?.value) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    return NextResponse.next();
+    return res;
   }
 
   if (pathname.startsWith('/admin')) {
     if (PUBLIC_ADMIN_PATHS.some((p) => pathname.startsWith(p))) {
-      return NextResponse.next();
+      return res;
     }
     const cookie = req.cookies.get(SESSION_COOKIE);
     if (!cookie?.value) {
@@ -27,12 +33,12 @@ export function middleware(req: NextRequest) {
       url.searchParams.set('from', pathname);
       return NextResponse.redirect(url);
     }
-    return NextResponse.next();
+    return res;
   }
 
-  return NextResponse.next();
+  return res;
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/((?!api/admin|admin|_next/static|_next/image|favicon.ico).*)'],
 };

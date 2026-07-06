@@ -32,6 +32,11 @@ export const bookingSchema = z.object({
   source: z.string().max(50).optional().default('site'),
 });
 
+// Sanitize: prevent key injection in KV (no colons, asterisks, etc.)
+export function sanitizeId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+}
+
 export const settingsSchema = z.object({
   phone: z.string(),
   phoneHref: z.string(),

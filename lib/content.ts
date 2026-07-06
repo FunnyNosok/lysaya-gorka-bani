@@ -6,6 +6,10 @@ import { banyas as seedBanyas, type Banya } from '@/data/banyas';
 import { cottages as seedCottages, type Cottage } from '@/data/cottages';
 import { services as seedServices, type Service } from '@/data/services';
 
+function sanitizeId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 100);
+}
+
 const KEYS = {
   post: (id: string) => `post:${id}`,
   postsAll: 'posts:all',
@@ -77,9 +81,10 @@ export async function getPublishedOffers(): Promise<Post[]> {
 }
 
 export async function getPostById(id: string): Promise<Post | null> {
-  if (!isKvAvailable()) return seedPosts.find((p) => p.id === id) || null;
+  const safeId = sanitizeId(id);
+  if (!isKvAvailable()) return seedPosts.find((p) => p.id === safeId) || null;
   await ensurePostsSeeded();
-  const p = await kv().get<Post>(KEYS.post(id));
+  const p = await kv().get<Post>(KEYS.post(safeId));
   return p || null;
 }
 
@@ -97,9 +102,10 @@ export async function savePost(post: Post): Promise<void> {
 
 export async function deletePost(id: string): Promise<void> {
   if (!isKvAvailable()) throw new Error('KV not available');
-  const post = await getPostById(id);
-  await kv().del(KEYS.post(id));
-  await kv().srem(POST_LIST_KEY, id);
+  const safeId = sanitizeId(id);
+  const post = await getPostById(safeId);
+  await kv().del(KEYS.post(safeId));
+  await kv().srem(POST_LIST_KEY, safeId);
   if (post) {
     await kv().del(KEYS.postSlug(post.slug));
   }
@@ -138,15 +144,17 @@ export async function getAllBookings(): Promise<Booking[]> {
 
 export async function getBookingById(id: string): Promise<Booking | null> {
   if (!isKvAvailable()) return null;
-  return (await kv().get<Booking>(KEYS.booking(id))) || null;
+  const safeId = sanitizeId(id);
+  return (await kv().get<Booking>(KEYS.booking(safeId))) || null;
 }
 
 export async function updateBookingStatus(id: string, status: Booking['status']): Promise<void> {
   if (!isKvAvailable()) throw new Error('KV not available');
-  const b = await getBookingById(id);
+  const safeId = sanitizeId(id);
+  const b = await getBookingById(safeId);
   if (!b) throw new Error('Booking not found');
   b.status = status;
-  await kv().set(KEYS.booking(id), b);
+  await kv().set(KEYS.booking(safeId), b);
 }
 
 // ─── Banyas ───
