@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
-import fs from 'fs/promises';
-import path from 'path';
+import { kv, isKvAvailable } from '@/lib/kv';
 import crypto from 'crypto';
 
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'images', 'uploads');
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
 
@@ -16,6 +14,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    if (!isKvAvailable()) {
+      return NextResponse.json(
+        { error: 'Хранилище недоступно — настройте KV_REST_API_URL и KV_REST_API_TOKEN' },
+        { status: 500 }
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get('file');
 
@@ -34,17 +39,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-
     const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     const hash = crypto.randomBytes(8).toString('hex');
     const filename = `${Date.now()}_${hash}.${ext}`;
-    const filepath = path.join(UPLOAD_DIR, filename);
 
     const bytes = await file.arrayBuffer();
-    await fs.writeFile(filepath, Buffer.from(bytes));
+    const base64 = Buffer.from(bytes).toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64}`;
 
-    const publicPath = `/images/uploads/${filename}`;
+    await kv().set(`upload:${filename}`, dataUrl);
+
+    const publicPath = `/api/uploads/${filename}`;
     return NextResponse.json({ ok: true, path: publicPath });
   } catch (e) {
     return NextResponse.json(
