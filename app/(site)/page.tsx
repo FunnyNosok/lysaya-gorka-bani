@@ -3,7 +3,7 @@ import { banyas as seedBanyas } from '@/data/banyas';
 import { services as seedServices } from '@/data/services';
 import { getPublishedOffers, getSettings, getAllBanyas, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
-import { ContactButtons } from '@/components/Contact';
+import { ContactButtons, tgHref } from '@/components/Contact';
 
 export const revalidate = 3600;
 
@@ -24,8 +24,8 @@ export default async function HomePage() {
           <p className="hero-sub">Настоящая баня на дровах, ароматные веники, профессиональные парильщики и уютная территория с бассейном и кафе. Отдохните с удовольствием — лёгкого вам пара!</p>
           <div className="hero-actions">
             <a className="btn btn--ember btn--lg" href="#bani">Выбрать баню</a>
-            {settings.telegram && (
-              <a className="btn btn--ghost-light btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            {tgHref(settings) && (
+              <a className="btn btn--ghost-light btn--lg" href={tgHref(settings)} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
             )}
             <a className="btn btn--ghost-light btn--lg" href={`tel:${settings.phone2Href}`}>Позвонить</a>
           </div>

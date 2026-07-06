@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { reviews } from '@/data/reviews';
 import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { tgHref } from '@/components/Contact';
 
 export const metadata: Metadata = {
   title: 'Отзывы — русские бани «Лысая горка», Екатеринбург',
@@ -48,8 +49,8 @@ export default async function ReviewsPage() {
           <h2>Оставьте свой отзыв</h2>
           <p>Понравилось у нас? Напишите нам в Telegram или ВКонтакте — будем рады вашим впечатлениям.</p>
           <div className="cta-band__actions">
-            {settings.telegram && (
-              <a className="btn btn--tg btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            {tgHref(settings) && (
+              <a className="btn btn--tg btn--lg" href={tgHref(settings)} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
             )}
             <a className="btn btn--ember btn--lg" href={settings.vk} target="_blank" rel="noopener noreferrer">Мы ВКонтакте</a>
             <a className="btn btn--cream btn--lg" href={`tel:${settings.phoneHref}`}>Позвонить</a>

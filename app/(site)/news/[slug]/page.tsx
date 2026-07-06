@@ -5,7 +5,7 @@ import { getPublishedPosts, getPostBySlug } from '@/lib/content';
 import { seedPosts } from '@/data/posts';
 import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
-import { ContactButtons } from '@/components/Contact';
+import { ContactButtons, tgHref } from '@/components/Contact';
 
 export const revalidate = 3600;
 
@@ -66,8 +66,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               {post.ctaText && post.type === 'offer' && (
                 <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <a className="btn btn--ember" href={`tel:${settings.phone2Href}`}>{post.ctaText}</a>
-                  {settings.telegram && (
-                    <a className="btn btn--tg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+                  {tgHref(settings) && (
+                    <a className="btn btn--tg" href={tgHref(settings)} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
                   )}
                 </div>
               )}

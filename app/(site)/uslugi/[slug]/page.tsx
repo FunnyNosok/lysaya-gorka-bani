@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { services as seedServices, serviceSlugs } from '@/data/services';
 import { getSettings, getAllServices } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
+import { tgHref } from '@/components/Contact';
 
 export async function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -86,8 +87,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               )}
               <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
-                {settings.telegram && (
-                  <a className="btn btn--tg btn--lg" href={settings.telegram} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+                {tgHref(settings) && (
+                  <a className="btn btn--tg btn--lg" href={tgHref(settings)} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
                 )}
               </div>
             </div>

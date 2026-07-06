@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { BookingContact } from '@/components/Contact';
+import { BookingContact, tgHref, maxHref } from '@/components/Contact';
 import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 
 export default async function ContactsPage() {
   const settings = await getSettings().catch(() => defaultSettings);
+  const tg = tgHref(settings);
+  const max = maxHref(settings);
 
   return (
     <>
@@ -38,12 +40,12 @@ export default async function ContactsPage() {
                   <span className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 4h4l2 5-2 1c1 3 3 5 6 6l1-2 5 2v4c0 1-1 2-2 2A16 16 0 0 1 3 6c0-1 1-2 2-2Z" /></svg></span>
                   <span><b>Телефоны</b><a href={`tel:${settings.phoneHref}`}>{settings.phone}</a><br /><a href={`tel:${settings.phone2Href}`}>{settings.phone2}</a></span>
                 </li>
-                {(settings.telegram || settings.max) && (
+                {(tg || max) && (
                   <li>
                     <span className="ci"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 4.3 2.9 11.6c-1.1.4-1.1 2 .1 2.3l4.7 1.5 1.8 5.6c.3.9 1.4 1.1 2 .4l2.6-2.5 4.7 3.5c.7.5 1.8.1 2-.8L23.4 5.5c.2-1-.8-1.9-1.7-1.2ZM9.5 15.1l-.4 3.9-1.2-4 9-6.9-7.4 7Z" /></svg></span>
                     <span><b>Мессенджеры</b>
-                      {settings.telegram && <><a href={settings.telegram} target="_blank" rel="noopener noreferrer">Telegram</a>{settings.max ? ' · ' : ''}</>}
-                      {settings.max && <a href={settings.max} target="_blank" rel="noopener noreferrer">MAX</a>}
+                      {tg && <><a href={tg} target="_blank" rel="noopener noreferrer">Telegram</a>{max ? ' · ' : ''}</>}
+                      {max && <a href={max} target="_blank" rel="noopener noreferrer">MAX</a>}
                     </span>
                   </li>
                 )}

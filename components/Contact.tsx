@@ -19,6 +19,30 @@ export const PHONE_SVG = (
 );
 
 /**
+ * Ссылка на Telegram. Если в настройках задан telegram — используем его
+ * (username, @username или полный URL). Иначе строим ссылку по номеру
+ * телефона: https://t.me/+<цифры> — Telegram открывает чат по номеру.
+ */
+export function tgHref(settings: SiteSettings): string {
+  const raw = (settings.telegram || '').trim();
+  if (raw) {
+    if (raw.startsWith('http') || raw.startsWith('tg:')) return raw;
+    return `https://t.me/${raw.replace(/^@/, '')}`;
+  }
+  const digits = (settings.phone2Href || settings.phoneHref || '').replace(/\D/g, '');
+  return digits ? `https://t.me/+${digits}` : '';
+}
+
+/**
+ * Ссылка на MAX. Прямых ссылок по номеру телефона у MAX нет —
+ * нужна персональная ссылка профиля (https://max.ru/u/…) из приложения.
+ * Возвращаем то, что задано в настройках, иначе пусто (кнопка скрывается).
+ */
+export function maxHref(settings: SiteSettings): string {
+  return (settings.max || '').trim();
+}
+
+/**
  * Ряд кнопок связи: Telegram, MAX (если заданы в настройках) и звонок.
  * Используется в hero и CTA-блоках. Кнопки мессенджеров показываются,
  * только если в админке заполнены соответствующие ссылки.
@@ -36,13 +60,15 @@ export function ContactButtons({
 }) {
   const lg = size === 'lg' ? ' btn--lg' : '';
   const tel = callHref || settings.phoneHref;
+  const tg = tgHref(settings);
+  const max = maxHref(settings);
   return (
     <div className="cta-band__actions">
-      {settings.telegram && (
-        <a className={`btn btn--tg${lg}`} href={settings.telegram} target="_blank" rel="noopener noreferrer">{TG_SVG}Telegram</a>
+      {tg && (
+        <a className={`btn btn--tg${lg}`} href={tg} target="_blank" rel="noopener noreferrer">{TG_SVG}Telegram</a>
       )}
-      {settings.max && (
-        <a className={`btn btn--max${lg}`} href={settings.max} target="_blank" rel="noopener noreferrer">{MAX_SVG}MAX</a>
+      {max && (
+        <a className={`btn btn--max${lg}`} href={max} target="_blank" rel="noopener noreferrer">{MAX_SVG}MAX</a>
       )}
       <a className={`btn btn--cream${lg}`} href={`tel:${tel}`}>{callLabel}</a>
     </div>
@@ -62,6 +88,8 @@ export function BookingContact({
   object?: string;
   heading?: string;
 }) {
+  const tg = tgHref(settings);
+  const max = maxHref(settings);
   return (
     <div className="booking-contact">
       <h3 className="booking-contact__title">{heading}</h3>
@@ -69,11 +97,11 @@ export function BookingContact({
         {object ? <>«{object}» — п</> : 'П'}озвоните или напишите в мессенджере, забронируем удобное время.
       </p>
       <a className="btn btn--ember btn--block btn--lg" href={`tel:${settings.phone2Href}`}>{PHONE_SVG}Позвонить {settings.phone2}</a>
-      {settings.telegram && (
-        <a className="btn btn--tg btn--block" href={settings.telegram} target="_blank" rel="noopener noreferrer">{TG_SVG}Написать в Telegram</a>
+      {tg && (
+        <a className="btn btn--tg btn--block" href={tg} target="_blank" rel="noopener noreferrer">{TG_SVG}Написать в Telegram</a>
       )}
-      {settings.max && (
-        <a className="btn btn--max btn--block" href={settings.max} target="_blank" rel="noopener noreferrer">{MAX_SVG}Написать в MAX</a>
+      {max && (
+        <a className="btn btn--max btn--block" href={max} target="_blank" rel="noopener noreferrer">{MAX_SVG}Написать в MAX</a>
       )}
       <p className="form-note">Или основной телефон: <a href={`tel:${settings.phoneHref}`}>{settings.phone}</a></p>
     </div>

@@ -3,7 +3,7 @@ import type { SiteSettings } from '@/data/settings';
 import type { Banya } from '@/data/banyas';
 import type { Cottage } from '@/data/cottages';
 import type { Service } from '@/data/services';
-import { TG_SVG, MAX_SVG } from '@/components/Contact';
+import { TG_SVG, MAX_SVG, tgHref, maxHref } from '@/components/Contact';
 
 const VENIK_SVG = (
   <svg viewBox="0 0 64 80" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
@@ -21,6 +21,8 @@ type HeaderProps = {
 };
 
 export function Header({ settings, banyas = [], cottages = [], services = [] }: HeaderProps) {
+  const tg = tgHref(settings);
+  const max = maxHref(settings);
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -68,13 +70,13 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
             <b><a href={`tel:${settings.phoneHref}`}>{settings.phone}</a></b>
             <small>{settings.address}</small>
           </div>
-          {settings.telegram && (
-            <a className="msg-btn msg-btn--tg" href={settings.telegram} target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+          {tg && (
+            <a className="msg-btn msg-btn--tg" href={tg} target="_blank" rel="noopener noreferrer" aria-label="Telegram">
               {TG_SVG}<span>Telegram</span>
             </a>
           )}
-          {settings.max && (
-            <a className="msg-btn msg-btn--max" href={settings.max} target="_blank" rel="noopener noreferrer" aria-label="MAX">
+          {max && (
+            <a className="msg-btn msg-btn--max" href={max} target="_blank" rel="noopener noreferrer" aria-label="MAX">
               {MAX_SVG}<span>MAX</span>
             </a>
           )}

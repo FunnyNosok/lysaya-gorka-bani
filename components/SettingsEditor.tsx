@@ -77,9 +77,9 @@ export function SettingsEditor({ initial }: { initial: SiteSettings }) {
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.2rem', margin: '24px 0 16px' }}>Мессенджеры</h3>
         <div className="field">
-          <label>Telegram — ссылка</label>
-          <input value={form.telegram} onChange={(e) => set('telegram', e.target.value)} style={inputStyle} placeholder="https://t.me/username" />
-          <p className="form-note">Полная ссылка вида https://t.me/username. Кнопка Telegram появится на сайте только если поле заполнено.</p>
+          <label>Telegram — ссылка или @username (необязательно)</label>
+          <input value={form.telegram} onChange={(e) => set('telegram', e.target.value)} style={inputStyle} placeholder="@username или https://t.me/username" />
+          <p className="form-note">Если оставить пустым — кнопка Telegram работает по номеру телефона 2 (t.me/+номер). Заполните, если нужен конкретный юзернейм.</p>
         </div>
         <div className="field">
           <label>MAX — ссылка</label>

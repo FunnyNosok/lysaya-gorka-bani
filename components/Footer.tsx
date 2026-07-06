@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { SiteSettings } from '@/data/settings';
 import { banyas } from '@/data/banyas';
 import { services } from '@/data/services';
-import { TG_SVG, MAX_SVG } from '@/components/Contact';
+import { TG_SVG, MAX_SVG, tgHref, maxHref } from '@/components/Contact';
 
 const VENIK_SVG = (
   <svg viewBox="0 0 64 80" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
@@ -14,6 +14,8 @@ const VENIK_SVG = (
 
 export function Footer({ settings }: { settings: SiteSettings }) {
   const year = new Date().getFullYear();
+  const tg = tgHref(settings);
+  const max = maxHref(settings);
   return (
     <footer className="site-footer">
       <div className="container">
@@ -28,11 +30,11 @@ export function Footer({ settings }: { settings: SiteSettings }) {
               <a href={settings.vk} target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.8 16.8c-5 0-8.3-3.6-8.4-9.4h2.6c.1 4.3 2 6.1 3.4 6.5V7.4h2.5v3.7c1.4-.2 2.9-1.8 3.4-3.7h2.5c-.4 2.2-1.9 3.8-3 4.5 1.1.6 2.8 2 3.5 4.9h-2.7c-.5-1.8-1.9-3.2-3.7-3.4v3.4h-.4Z" /></svg>
               </a>
-              {settings.telegram && (
-                <a href={settings.telegram} target="_blank" rel="noopener noreferrer" aria-label="Telegram">{TG_SVG}</a>
+              {tg && (
+                <a href={tg} target="_blank" rel="noopener noreferrer" aria-label="Telegram">{TG_SVG}</a>
               )}
-              {settings.max && (
-                <a href={settings.max} target="_blank" rel="noopener noreferrer" aria-label="MAX">{MAX_SVG}</a>
+              {max && (
+                <a href={max} target="_blank" rel="noopener noreferrer" aria-label="MAX">{MAX_SVG}</a>
               )}
             </div>
           </div>
