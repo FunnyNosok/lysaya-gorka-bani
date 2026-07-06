@@ -7,7 +7,7 @@ import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 import { ContactButtons, tgHref } from '@/components/Contact';
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   const posts = await getPublishedPosts().catch(() => seedPosts);

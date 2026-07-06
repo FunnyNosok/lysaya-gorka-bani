@@ -5,7 +5,7 @@ import { getPublishedOffers, getSettings, getAllBanyas, getAllServices } from '@
 import { defaultSettings } from '@/data/settings';
 import { ContactButtons, tgHref } from '@/components/Contact';
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function HomePage() {
   const settings = await getSettings().catch(() => defaultSettings);

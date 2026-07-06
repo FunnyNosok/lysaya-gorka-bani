@@ -6,7 +6,7 @@ import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 import { ContactButtons } from '@/components/Contact';
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Акции и статьи — русские бани «Лысая горка», Екатеринбург',

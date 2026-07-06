@@ -2,19 +2,25 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nagorke.ru'),
   title: {
     default: 'Русские бани «Лысая горка» в Екатеринбурге — аренда бани на час и сутки',
     template: '%s | Лысая горка',
   },
   description: 'Русские бани на дровах в Екатеринбурге. Аренда бани на час и сутки: Русский домик, Лесной домик, Морской домик, Царские хоромы. Парильщики, массаж, кафе, бассейн. Лёгкого пара!',
-  icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 80'><g fill='none' stroke='%23c8893a' stroke-width='3' stroke-linecap='round'><path d='M22 13h20M24 18h16' stroke-width='3.5'/><path d='M32 18v12'/><path d='M32 30c-9 9-13 24-15 45M32 30c-7 10-10 25-11 46M32 30c-3 12-4 27-4 46M32 30v46M32 30c3 12 4 27 4 46M32 30c7 10 10 25 11 46M32 30c9 9 13 24 15 45'/></g></svg>",
+  alternates: {
+    canonical: '/',
   },
   openGraph: {
     title: 'Русские бани «Лысая горка» в Екатеринбурге',
     description: 'Аренда бани на час и сутки. Пар на дровах, веники, парильщики, кафе и бассейн.',
     locale: 'ru_RU',
     type: 'website',
+    siteName: 'Лысая горка',
+    images: [{ url: '/images/ban/main-12.jpg', width: 1200, height: 630, alt: 'Русские бани Лысая горка' }],
+  },
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 80'><g fill='none' stroke='%23c8893a' stroke-width='3' stroke-linecap='round'><path d='M22 13h20M24 18h16' stroke-width='3.5'/><path d='M32 18v12'/><path d='M32 30c-9 9-13 24-15 45M32 30c-7 10-10 25-11 46M32 30c-3 12-4 27-4 46M32 30v46M32 30c3 12 4 27 4 46M32 30c7 10 10 25 11 46M32 30c9 9 13 24 15 45'/></g></svg>",
   },
 };
 

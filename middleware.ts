@@ -15,6 +15,20 @@ export function middleware(req: NextRequest) {
 
   if (pathname.startsWith('/api/admin/')) {
     if (PUBLIC_API_PATHS.some((p) => pathname === p)) return res;
+
+    // CSRF: check Origin header for state-changing requests
+    const method = req.method.toUpperCase();
+    if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
+      const origin = req.headers.get('origin');
+      const host = req.headers.get('host');
+      if (origin && host) {
+        const originHost = origin.replace(/^https?:\/\//, '').split('/')[0];
+        if (originHost !== host) {
+          return NextResponse.json({ error: 'Cross-origin request blocked' }, { status: 403 });
+        }
+      }
+    }
+
     const cookie = req.cookies.get(SESSION_COOKIE);
     if (!cookie?.value) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

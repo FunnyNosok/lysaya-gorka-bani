@@ -1,10 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
-import { kv, isKvAvailable } from '@/lib/kv';
+import fs from 'fs/promises';
+import path from 'path';
 import crypto from 'crypto';
 
+const UPLOAD_DIR = path.join(process.cwd(), 'public', 'images', 'uploads');
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
+
+// Magic bytes signatures for real file validation
+const MAGIC_BYTES: Record<string, number[]> = {
+  'image/jpeg': [0xFF, 0xD8, 0xFF],
+  'image/png': [0x89, 0x50, 0x4E, 0x47],
+  'image/gif': [0x47, 0x49, 0x46],
+  'image/webp': [0x52, 0x49, 0x46, 0x46], // RIFF
+};
+
+function checkMagicBytes(buf: Buffer, contentType: string): boolean {
+  const expected = MAGIC_BYTES[contentType];
+  if (!expected) return true; // AVIF has no simple signature, skip
+  if (buf.length < expected.length) return false;
+  return expected.every((byte, i) => buf[i] === byte);
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,13 +31,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    if (!isKvAvailable()) {
-      return NextResponse.json(
-        { error: 'Хранилище недоступно — настройте KV_REST_API_URL и KV_REST_API_TOKEN' },
-        { status: 500 }
-      );
-    }
-
     const formData = await req.formData();
     const file = formData.get('file');
 
@@ -39,17 +49,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const bytes = await file.arrayBuffer();
+    const buf = Buffer.from(bytes);
+
+    // Validate magic bytes — prevent disguised file uploads
+    if (!checkMagicBytes(buf, file.type)) {
+      return NextResponse.json(
+        { error: 'Содержимое файла не соответствует типу' },
+        { status: 400 }
+      );
+    }
+
+    await fs.mkdir(UPLOAD_DIR, { recursive: true });
+
+    const ext = file.type.split('/')[1] || 'jpg';
     const hash = crypto.randomBytes(8).toString('hex');
     const filename = `${Date.now()}_${hash}.${ext}`;
+    const filepath = path.join(UPLOAD_DIR, filename);
 
-    const bytes = await file.arrayBuffer();
-    const base64 = Buffer.from(bytes).toString('base64');
-    const dataUrl = `data:${file.type};base64,${base64}`;
+    await fs.writeFile(filepath, buf);
 
-    await kv().set(`upload:${filename}`, dataUrl);
-
-    const publicPath = `/api/uploads/${filename}`;
+    const publicPath = `/images/uploads/${filename}`;
     return NextResponse.json({ ok: true, path: publicPath });
   } catch (e) {
     return NextResponse.json(
