@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export function ClientScripts() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const body = document.body;
 
@@ -112,7 +115,7 @@ export function ClientScripts() {
     return () => {
       document.removeEventListener('keydown', onKey);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="lightbox" id="lightbox" aria-hidden="true">
