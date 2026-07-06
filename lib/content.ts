@@ -11,6 +11,7 @@ const KEYS = {
   postsAll: 'posts:all',
   postsPublished: 'posts:published',
   postSlug: (slug: string) => `posts:slug:${slug}`,
+  postsSeeded: 'posts:seeded',
   settings: 'site:settings',
   booking: (id: string) => `booking:${id}`,
   bookingsAll: 'bookings:all',
@@ -20,6 +21,25 @@ const KEYS = {
 } as const;
 
 const POST_LIST_KEY = 'posts:list';
+
+// Один раз переносит стартовые (seed) посты в KV. Без этого при добавлении
+// первого поста через админку список переставал быть пустым и стартовые
+// акции/статьи пропадали с сайта. Добавляем только те id, которых ещё нет,
+// поэтому уже созданные посты не затираются, а флаг posts:seeded не даёт
+// повторно возвращать удалённые администратором записи.
+async function ensurePostsSeeded(): Promise<void> {
+  if (!isKvAvailable()) return;
+  const seeded = await kv().get(KEYS.postsSeeded);
+  if (seeded) return;
+  for (const p of seedPosts) {
+    const exists = await kv().get<Post>(KEYS.post(p.id));
+    if (!exists) {
+      await kv().set(KEYS.post(p.id), p);
+      await kv().sadd(POST_LIST_KEY, p.id);
+    }
+  }
+  await kv().set(KEYS.postsSeeded, '1');
+}
 
 export async function getSettings(): Promise<SiteSettings> {
   if (!isKvAvailable()) return defaultSettings;
@@ -34,6 +54,7 @@ export async function saveSettings(settings: SiteSettings): Promise<void> {
 
 export async function getAllPosts(): Promise<Post[]> {
   if (!isKvAvailable()) return seedPosts;
+  await ensurePostsSeeded();
   const ids = await kv().smembers(POST_LIST_KEY);
   if (!ids.length) return seedPosts;
   const posts: Post[] = [];
@@ -57,6 +78,7 @@ export async function getPublishedOffers(): Promise<Post[]> {
 
 export async function getPostById(id: string): Promise<Post | null> {
   if (!isKvAvailable()) return seedPosts.find((p) => p.id === id) || null;
+  await ensurePostsSeeded();
   const p = await kv().get<Post>(KEYS.post(id));
   return p || null;
 }
@@ -68,6 +90,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
 export async function savePost(post: Post): Promise<void> {
   if (!isKvAvailable()) throw new Error('KV not available');
+  await ensurePostsSeeded();
   await kv().set(KEYS.post(post.id), post);
   await kv().sadd(POST_LIST_KEY, post.id);
 }

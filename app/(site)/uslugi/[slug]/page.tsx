@@ -85,6 +85,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   {s.plaqueNote && <p className="note" style={{ margin: '14px 0 0' }}>{s.plaqueNote}</p>}
                 </div>
               )}
+              {s.priceTable && (
+                <div className="price-table" style={{ marginTop: '20px', maxWidth: '500px' }}>
+                  {s.priceTable.map((r) => (
+                    <div className="pr" key={r.label}><span>{r.label}</span><b>{r.value}</b></div>
+                  ))}
+                </div>
+              )}
               <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
                 {tgHref(settings) && (
@@ -105,6 +112,30 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   <img src={g.src} alt={g.alt} />
                 </figure>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {s.menuImage && (
+        <section className="section">
+          <div className="container">
+            <div className="section-head section-head--center reveal">
+              <span className="eyebrow eyebrow--center">Меню кафе</span>
+              <h2>Наше меню</h2>
+              <p className="lead">Холодные закуски, салаты, супы, горячие блюда, десерты и напитки.</p>
+            </div>
+            <div className="reveal" style={{ textAlign: 'center' }}>
+              <a href={s.menuImage} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={s.menuImage}
+                  alt="Меню кафе"
+                  style={{ maxWidth: '100%', borderRadius: '16px', boxShadow: 'var(--shadow-card)', margin: '0 auto' }}
+                />
+              </a>
+              <p style={{ marginTop: '14px', fontSize: '.88rem', color: 'var(--ink-soft)' }}>
+                Нажмите на изображение, чтобы открыть меню в полном размере
+              </p>
             </div>
           </div>
         </section>
