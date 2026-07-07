@@ -39,7 +39,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       dateLabel: body.date ? formatDateLabel(body.date) : existing.dateLabel,
       typeLabel: (body.type ?? existing.type) === 'offer' ? 'Акция' : 'Статья',
       ctaText: body.ctaText ?? existing.ctaText,
-      ctaWhatsappText: body.ctaWhatsappText ?? existing.ctaWhatsappText,
       note: body.note ?? existing.note,
       validTo: body.validTo ?? existing.validTo,
       seoTitle: body.seoTitle ?? existing.seoTitle,

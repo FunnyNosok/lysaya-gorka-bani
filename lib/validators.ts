@@ -13,7 +13,6 @@ export const postSchema = z.object({
   dateLabel: z.string().min(1),
   typeLabel: z.string().min(1),
   ctaText: z.string().optional().nullable(),
-  ctaWhatsappText: z.string().optional().nullable(),
   note: z.string().optional().nullable(),
   validTo: z.string().optional().nullable(),
   seoTitle: z.string().optional().nullable(),

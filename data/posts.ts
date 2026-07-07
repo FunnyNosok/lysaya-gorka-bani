@@ -14,7 +14,6 @@ export type Post = {
   dateLabel: string;
   typeLabel: string;
   ctaText?: string | null;
-  ctaWhatsappText?: string | null;
   note?: string | null;
   validTo?: string | null;
   seoTitle?: string | null;
@@ -37,7 +36,6 @@ export const seedPosts: Post[] = [
     dateLabel: '12 апреля 2026',
     typeLabel: 'Акция',
     ctaText: 'Воспользоваться',
-    ctaWhatsappText: 'Здравствуйте! Хочу забронировать баню с кальяном в подарок.',
     validTo: null,
     createdAt: '2026-04-12T00:00:00.000Z',
     updatedAt: '2026-04-12T00:00:00.000Z',
@@ -55,7 +53,6 @@ export const seedPosts: Post[] = [
     dateLabel: '9 января 2023',
     typeLabel: 'Акция',
     ctaText: 'Забронировать',
-    ctaWhatsappText: 'Здравствуйте! Хочу забронировать баню по акции ко дню рождения.',
     note: 'На данное предложение скидка по дисконтным картам не распространяется. Доплата за дополнительного гостя — 100 ₽. Дополнительные услуги оплачиваются согласно прейскуранту.',
     validTo: null,
     createdAt: '2023-01-09T00:00:00.000Z',
@@ -74,7 +71,6 @@ export const seedPosts: Post[] = [
     dateLabel: '9 января 2023',
     typeLabel: 'Акция',
     ctaText: 'Забронировать',
-    ctaWhatsappText: 'Здравствуйте! Хочу забронировать баню — 1 час в подарок.',
     note: 'Действительно в выходные дни и в будни с 15:00 до 06:00. Скидка по дисконтным картам не распространяется. Доплата за дополнительного гостя — 100 ₽.',
     validTo: null,
     createdAt: '2023-01-09T00:00:00.000Z',

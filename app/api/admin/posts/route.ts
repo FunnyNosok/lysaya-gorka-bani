@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
       dateLabel: body.dateLabel || formatDateLabel(body.date || new Date().toISOString().slice(0, 10)),
       typeLabel: (body.type || 'article') === 'offer' ? 'Акция' : 'Статья',
       ctaText: body.ctaText || null,
-      ctaWhatsappText: body.ctaWhatsappText || null,
       note: body.note || null,
       validTo: body.validTo || null,
       seoTitle: body.seoTitle || null,
