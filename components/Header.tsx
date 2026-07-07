@@ -24,7 +24,7 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
   const tg = tgHref(settings);
   const max = maxHref(settings);
   return (
-    <>
+    <div className="header-wrap">
     <header className="site-header">
       <div className="header-inner">
         <Link href="/" className="brand" aria-label="Лысая горка — на главную">
@@ -104,6 +104,6 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
         </a>
       </div>
     </nav>
-    </>
+    </div>
   );
 }
