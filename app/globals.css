@@ -123,8 +123,8 @@ p{margin:0 0 1em}
 .btn--tg svg,.btn--max svg{width:1.15em;height:1.15em;flex:0 0 auto}
 
 /* ---------- header ---------- */
+.header-wrap{position:sticky;top:0;z-index:60}
 .site-header{
-  position:sticky;top:0;z-index:60;
   background:rgba(36,26,18,.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(200,137,58,.22);
@@ -142,7 +142,6 @@ p{margin:0 0 1em}
 .brand-name b{color:var(--amber)}
 .brand-sub{font-family:var(--ff-script);font-size:.95rem;color:var(--amber-soft);margin-top:2px}
 
-.header-wrap{position:relative}
 .nav{display:flex;align-items:center;gap:4px;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:55}
 .nav>a,.nav .has-sub>a{
   position:relative;padding:10px 12px;border-radius:8px;font-weight:600;font-size:.92rem;
