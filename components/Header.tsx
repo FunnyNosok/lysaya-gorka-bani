@@ -35,6 +35,52 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
           </span>
         </Link>
 
+        <nav className="nav" aria-label="Основная навигация">
+          <button className="nav-close" aria-label="Закрыть меню"><span></span></button>
+          <Link href="/">Главная</Link>
+          <span className="has-sub">
+            <Link href="/arenda-ban">Бани</Link>
+            <span className="submenu">
+              {banyas.map((b) => (
+                <Link key={b.slug} href={`/arenda-ban/${b.slug}`}>{b.title}</Link>
+              ))}
+            </span>
+          </span>
+          <span className="has-sub">
+            <Link href="/arenda-cottage">Коттеджи</Link>
+            <span className="submenu">
+              {cottages.map((c) => (
+                <Link key={c.slug} href={`/arenda-cottage/${c.slug}`}>{c.title}</Link>
+              ))}
+            </span>
+          </span>
+          <span className="has-sub">
+            <Link href="/uslugi">Услуги</Link>
+            <span className="submenu">
+              {services.map((s) => (
+                <Link key={s.slug} href={`/uslugi/${s.slug}`}>{s.title}</Link>
+              ))}
+            </span>
+          </span>
+          <Link href="/news">Акции и статьи</Link>
+          <Link href="/otzivy">Отзывы</Link>
+          <Link href="/kontakty">Контакты</Link>
+
+          <div className="nav-contacts">
+            <a href={`tel:${settings.phoneHref}`} className="nav-contacts__phone">{settings.phone}</a>
+            {tg && (
+              <a className="nav-contacts__link" href={tg} target="_blank" rel="noopener noreferrer">{TG_SVG} Telegram</a>
+            )}
+            {max && (
+              <a className="nav-contacts__link" href={max} target="_blank" rel="noopener noreferrer">{MAX_SVG} MAX</a>
+            )}
+            <a className="nav-contacts__link" href={`tel:${settings.phone2Href}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 4h4l2 5-2 1c1 3 3 5 6 6l1-2 5 2v4c0 1-1 2-2 2A16 16 0 0 1 3 6c0-1 1-2 2-2Z" /></svg>
+              Позвонить
+            </a>
+          </div>
+        </nav>
+
         <div className="header-cta">
           <div className="header-phone">
             <b><a href={`tel:${settings.phoneHref}`}>{settings.phone}</a></b>
@@ -58,52 +104,6 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
         <button className="nav-toggle" aria-label="Меню" aria-expanded="false"><span></span></button>
       </div>
     </header>
-
-    <nav className="nav" aria-label="Основная навигация">
-      <button className="nav-close" aria-label="Закрыть меню"><span></span></button>
-      <Link href="/">Главная</Link>
-      <span className="has-sub">
-        <Link href="/arenda-ban">Бани</Link>
-        <span className="submenu">
-          {banyas.map((b) => (
-            <Link key={b.slug} href={`/arenda-ban/${b.slug}`}>{b.title}</Link>
-          ))}
-        </span>
-      </span>
-      <span className="has-sub">
-        <Link href="/arenda-cottage">Коттеджи</Link>
-        <span className="submenu">
-          {cottages.map((c) => (
-            <Link key={c.slug} href={`/arenda-cottage/${c.slug}`}>{c.title}</Link>
-          ))}
-        </span>
-      </span>
-      <span className="has-sub">
-        <Link href="/uslugi">Услуги</Link>
-        <span className="submenu">
-          {services.map((s) => (
-            <Link key={s.slug} href={`/uslugi/${s.slug}`}>{s.title}</Link>
-          ))}
-        </span>
-      </span>
-      <Link href="/news">Акции и статьи</Link>
-      <Link href="/otzivy">Отзывы</Link>
-      <Link href="/kontakty">Контакты</Link>
-
-      <div className="nav-contacts">
-        <a href={`tel:${settings.phoneHref}`} className="nav-contacts__phone">{settings.phone}</a>
-        {tg && (
-          <a className="nav-contacts__link" href={tg} target="_blank" rel="noopener noreferrer">{TG_SVG} Telegram</a>
-        )}
-        {max && (
-          <a className="nav-contacts__link" href={max} target="_blank" rel="noopener noreferrer">{MAX_SVG} MAX</a>
-        )}
-        <a className="nav-contacts__link" href={`tel:${settings.phone2Href}`}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 4h4l2 5-2 1c1 3 3 5 6 6l1-2 5 2v4c0 1-1 2-2 2A16 16 0 0 1 3 6c0-1 1-2 2-2Z" /></svg>
-          Позвонить
-        </a>
-      </div>
-    </nav>
     </div>
   );
 }
