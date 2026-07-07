@@ -63,6 +63,21 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
           <Link href="/news">Акции и статьи</Link>
           <Link href="/otzivy">Отзывы</Link>
           <Link href="/kontakty">Контакты</Link>
+
+          {/* Mobile-only contact block inside nav */}
+          <div className="nav-contacts">
+            <a href={`tel:${settings.phoneHref}`} className="nav-contacts__phone">{settings.phone}</a>
+            {tg && (
+              <a className="nav-contacts__link" href={tg} target="_blank" rel="noopener noreferrer">{TG_SVG} Telegram</a>
+            )}
+            {max && (
+              <a className="nav-contacts__link" href={max} target="_blank" rel="noopener noreferrer">{MAX_SVG} MAX</a>
+            )}
+            <a className="nav-contacts__link" href={`tel:${settings.phone2Href}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 4h4l2 5-2 1c1 3 3 5 6 6l1-2 5 2v4c0 1-1 2-2 2A16 16 0 0 1 3 6c0-1 1-2 2-2Z" /></svg>
+              Позвонить
+            </a>
+          </div>
         </nav>
 
         <div className="header-cta">

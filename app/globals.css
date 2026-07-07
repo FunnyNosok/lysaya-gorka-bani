@@ -180,6 +180,7 @@ p{margin:0 0 1em}
 .booking-contact .form-note{margin-top:6px}
 .booking-contact .form-note a{color:var(--ember);font-weight:700}
 
+.nav-contacts{display:none}
 .nav-toggle{display:none;width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;color:var(--cream)}
 .nav-toggle span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;position:relative}
 .nav-toggle span::before,.nav-toggle span::after{content:"";position:absolute;left:0;width:22px;height:2px;background:currentColor;border-radius:2px;transition:.25s}
@@ -523,6 +524,21 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   }
   .submenu a{padding:12px 10px;font-size:.96rem;border-bottom:1px solid rgba(245,235,214,.05)}
 
+  /* contacts inside mobile nav */
+  .nav-contacts{
+    margin-top:auto;padding:24px 8px 8px;display:flex;flex-direction:column;gap:14px;
+    border-top:1px solid rgba(200,137,58,.22);
+  }
+  .nav-contacts__phone{
+    font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--amber);
+  }
+  .nav-contacts__link{
+    display:flex;align-items:center;gap:10px;font-size:1rem;font-weight:600;color:var(--cream);
+    padding:12px 14px;border-radius:12px;background:rgba(245,235,214,.06);
+  }
+  .nav-contacts__link svg{width:1.3em;height:1.3em;flex:0 0 auto;color:var(--amber)}
+  .nav-contacts__link:active{background:rgba(245,235,214,.12)}
+
   /* hero */
   .hero-inner{padding:64px 0 52px}
   .hero h1{font-size:clamp(1.9rem,8vw,2.8rem);max-width:none}
@@ -628,7 +644,7 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   body{font-size:16px;line-height:1.6}
   .container{padding-inline:16px}
 
-  /* header — на телефоне только иконка звонка + бургер, мессенджеры в футере/контактах */
+  /* header — на телефоне только иконка звонка + бургер */
   .header-inner{padding:8px 14px;gap:8px}
   .brand .venik{font-size:24px}
   .brand-name{font-size:.98rem}
@@ -637,6 +653,9 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   .header-cta .msg-btn--call{padding:9px 11px;font-size:0;gap:0}
   .header-cta .msg-btn--call svg{width:1.2em;height:1.2em}
   .nav-toggle{width:40px;height:40px}
+
+  /* mobile nav contacts */
+  .nav-contacts__phone{font-size:1.2rem}
 
   /* hero */
   .hero-inner{padding:48px 0 40px}
@@ -648,7 +667,9 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
 
   /* sections */
   .section{padding:40px 0}
+  .section--tight{padding:32px 0}
   .section-head{margin-bottom:26px}
+  .section-head h2{font-size:1.4rem}
   .eyebrow{font-size:.72rem;letter-spacing:.18em}
 
   /* features → 2 col compact */
@@ -676,6 +697,15 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   .plaque h2{font-size:1.2rem}
   .plaque .plank-row{font-size:.88rem;padding:10px 0}
 
+  /* price table */
+  .price-table .pr{font-size:.82rem;padding:9px 10px}
+  .price-table .pr span{font-size:.78rem}
+
+  /* prog list */
+  .prog h4{font-size:1rem}
+  .prog .pd{font-size:.82rem}
+  .prog .pp{font-size:1rem}
+
   /* atmosphere → 1 col, smaller */
   .atmo{grid-template-columns:1fr;grid-auto-rows:180px}
   .atmo .w2{grid-column:span 1}
@@ -683,6 +713,31 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
 
   /* news */
   .news-card__media{aspect-ratio:16/10}
+  .news-card h3{font-size:1.1rem}
+  .news-card__body{padding:16px 16px 18px}
+
+  /* page hero */
+  .page-hero{padding:44px 0 32px}
+  .page-hero h1{font-size:1.5rem}
+  .page-hero p{font-size:.92rem}
+
+  /* contacts */
+  .contact-list li{padding:14px 0}
+  .contact-list .ci{width:40px;height:40px}
+  .contact-list .ci svg{width:18px;height:18px}
+  .contact-list b{font-size:1rem}
+
+  /* reviews */
+  .review{padding:18px 16px}
+  .review blockquote{font-size:.9rem}
+
+  /* footer */
+  .footer-brand p{font-size:.86rem}
+  .footer-col a{font-size:.88rem}
+
+  /* booking contact */
+  .booking-contact__title{font-size:1.15rem}
+  .booking-contact__lead{font-size:.86rem}
 
   /* buttons: allow wrap on small screens */
   .btn{white-space:normal}
@@ -692,6 +747,28 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   .lb-nav{width:44px;height:44px;font-size:1.4rem}
   .lb-close{top:14px;right:14px;width:40px;height:40px;font-size:1.8rem;line-height:40px}
   .lightbox img{max-width:94vw;max-height:80vh;border-radius:6px}
+
+  /* CTA band */
+  .cta-band__phone{font-size:1.15rem}
+  .cta-band h2{font-size:1.3rem}
+
+  /* mini cards */
+  .mini-card h4{font-size:1.1rem}
+  .mini-card .mp{font-size:.82rem}
+
+  /* detail text */
+  .detail-text h3{font-size:1.15rem}
+  .detail-text h4{font-size:.82rem}
+  .detail-text ul li{font-size:.9rem}
+  .detail-feats li{font-size:.78rem;padding:5px 10px}
+
+  /* menu images on cafe page */
+  .menu-images img{width:100%}
+
+  /* admin */
+  .form-card{padding:20px 16px}
+  .form-card table{font-size:.82rem}
+  .form-card th,.form-card td{padding:10px 10px}
 }
 
 /* ---- very small (≤380) ---- */

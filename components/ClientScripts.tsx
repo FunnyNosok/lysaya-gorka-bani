@@ -5,58 +5,86 @@ import { usePathname } from 'next/navigation';
 
 export function ClientScripts() {
   const pathname = usePathname();
-  const navInit = useRef(false);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
-  // Nav toggle + header scroll — init once (persists across navigations)
+  // Nav toggle + header scroll — re-init every time (safe, cleans up previous)
   useEffect(() => {
-    if (navInit.current) return;
-    navInit.current = true;
-
     const body = document.body;
-    const toggle = document.querySelector('.nav-toggle');
 
     function closeNav() {
       body.classList.remove('nav-open');
-      toggle?.setAttribute('aria-expanded', 'false');
+      const t = document.querySelector('.nav-toggle');
+      t?.setAttribute('aria-expanded', 'false');
     }
     function openNav() {
       body.classList.add('nav-open');
-      toggle?.setAttribute('aria-expanded', 'true');
+      const t = document.querySelector('.nav-toggle');
+      t?.setAttribute('aria-expanded', 'true');
     }
 
-    toggle?.addEventListener('click', () => {
-      if (body.classList.contains('nav-open')) closeNav();
-      else openNav();
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+    // Event delegation — survives React re-renders
+    const clickHandler = (e: Event) => {
+      const target = e.target as HTMLElement;
 
+      // Burger toggle
+      if (target.closest('.nav-toggle')) {
+        e.preventDefault();
+        if (body.classList.contains('nav-open')) closeNav();
+        else openNav();
+        return;
+      }
+
+      // Close on nav link click
+      if (target.closest('.nav a')) {
+        closeNav();
+        return;
+      }
+
+      // Close on backdrop click (outside nav and toggle)
+      if (body.classList.contains('nav-open')) {
+        const nav = document.querySelector('.nav');
+        const toggle = document.querySelector('.nav-toggle');
+        if (nav && !nav.contains(target) && toggle && !toggle.contains(target)) {
+          closeNav();
+        }
+      }
+    };
+
+    const keyHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeNav();
+    };
+
+    document.addEventListener('click', clickHandler);
+    document.addEventListener('keydown', keyHandler);
+
+    // Header scroll
     const header = document.querySelector('.site-header');
+    let scrollHandler: (() => void) | null = null;
     if (header) {
-      const onScroll = () => {
+      scrollHandler = () => {
         if (window.scrollY > 20) header.classList.add('scrolled');
         else header.classList.remove('scrolled');
       };
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
+      scrollHandler();
+      window.addEventListener('scroll', scrollHandler, { passive: true });
     }
+
+    // Cleanup
+    const prevCleanup = cleanupRef.current;
+    if (prevCleanup) prevCleanup();
+    cleanupRef.current = () => {
+      document.removeEventListener('click', clickHandler);
+      document.removeEventListener('keydown', keyHandler);
+      if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
+    };
+
+    return cleanupRef.current;
   }, []);
 
   // Reveal, gallery, lightbox — re-init on each page change
   useEffect(() => {
     const body = document.body;
-
-    // Close nav on navigation
     body.classList.remove('nav-open');
-
-    // Close nav on link click (delegated)
-    const navClickHandler = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('.nav a')) {
-        body.classList.remove('nav-open');
-        document.querySelector('.nav-toggle')?.setAttribute('aria-expanded', 'false');
-      }
-    };
-    document.addEventListener('click', navClickHandler);
 
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
@@ -142,7 +170,6 @@ export function ClientScripts() {
     document.addEventListener('keydown', lbKeyHandler);
 
     return () => {
-      document.removeEventListener('click', navClickHandler);
       linkHandlers.forEach(({ el, handler }) => el.removeEventListener('click', handler));
       lb?.querySelector('.lb-close')?.removeEventListener('click', lbCloseHandler);
       lb?.querySelector('.lb-prev')?.removeEventListener('click', lbPrevHandler);

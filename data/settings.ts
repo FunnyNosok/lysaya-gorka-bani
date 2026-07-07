@@ -25,7 +25,7 @@ export const defaultSettings: SiteSettings = {
   // Ссылки на мессенджеры. Заполняются в админке (Настройки).
   // Telegram: https://t.me/username · MAX: https://max.ru/u/<хеш из приложения>
   telegram: '',
-  max: '',
+  max: 'https://max.ru/u/lysayagorka',
   address: 'Екатеринбург, Предельная, 41',
   addressArea: 'район УНЦ',
   email: 'nagorke@list.ru',
