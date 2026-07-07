@@ -514,7 +514,6 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   }
   body.nav-open .nav{transform:none;visibility:visible;pointer-events:auto}
   body.nav-open{overflow:hidden}
-  body.nav-open .site-header{display:none}
 
   .nav-close{
     display:flex;align-self:flex-end;width:44px;height:44px;border-radius:10px;
