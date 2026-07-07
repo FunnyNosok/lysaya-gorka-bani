@@ -34,6 +34,13 @@ export function ClientScripts() {
         return;
       }
 
+      // Close button inside menu
+      if (target.closest('.nav-close')) {
+        e.preventDefault();
+        closeNav();
+        return;
+      }
+
       // Close on nav link click
       if (target.closest('.nav a')) {
         closeNav();

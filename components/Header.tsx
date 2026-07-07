@@ -35,6 +35,7 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
         </Link>
 
         <nav className="nav" aria-label="Основная навигация">
+          <button className="nav-close" aria-label="Закрыть меню"><span></span></button>
           <Link href="/">Главная</Link>
           <span className="has-sub">
             <Link href="/arenda-ban">Бани</Link>
