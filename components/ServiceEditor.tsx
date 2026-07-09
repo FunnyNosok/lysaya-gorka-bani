@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Service, ServiceProgram } from '@/data/services';
 
 export function ServiceEditor({ initial }: { initial: Service }) {
+  const router = useRouter();
   const [form, setForm] = useState<Service>(initial);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
@@ -38,7 +40,10 @@ export function ServiceEditor({ initial }: { initial: Service }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (res.ok) setSaved(true);
+      if (res.ok) {
+        setSaved(true);
+        router.refresh();
+      }
       else {
         const data = await res.json();
         setError(data.error || 'Ошибка сохранения');

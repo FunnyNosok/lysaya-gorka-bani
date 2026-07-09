@@ -22,6 +22,9 @@ export async function PUT(req: NextRequest) {
     }
     await saveCottage(body);
     revalidatePath('/', 'layout');
+    revalidatePath('/admin/cottages');
+    revalidatePath(`/admin/cottages/${body.slug}`);
+    revalidatePath(`/arenda-cottage/${body.slug}`);
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

@@ -41,7 +41,7 @@ export default async function HomePage() {
         <div className="container">
           <div className="features reveal">
             <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M12 3c-2 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3-6-5-9Z" /></svg><h3>Парилка на дровах</h3><p>Настоящий живой жар</p></div>
-            <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M7 14c2-2 4-2 5 0 1-2 3-2 5 0 2-3 0-7-5-7S5 11 7 14Z" /><path d="M12 7v10" /></svg><h3>Веники</h3><p>Берёза и дуб</p></div>
+            <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M7 14c2-2 4-2 5 0 1-2 3-2 5 0 2-3 0-7-5-7S5 11 7 14Z" /><path d="M12 7v10" /></svg><h3>Веники</h3><p>Пихта</p></div>
             <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="8" r="3.5" /><path d="M5 21c0-4 3-6 7-6s7 2 7 6" /></svg><h3>Парильщики</h3><p>10+ видов парения</p></div>
             <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M4 9h16l-1 11H5L4 9Z" /><path d="M8 9V7a4 4 0 0 1 8 0v2" /></svg><h3>Кафе</h3><p>Русская кухня</p></div>
             <div className="feature"><svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M3 13c4 0 6-2 9-2s5 2 9 2" /><path d="M3 18c4 0 6-2 9-2s5 2 9 2" /><path d="M7 9V5M17 9V5" /></svg><h3>Бассейн</h3><p>Открытый, на улице</p></div>
@@ -85,7 +85,7 @@ export default async function HomePage() {
           <div className="section-head section-head--center reveal">
             <span className="eyebrow eyebrow--center">Дополнительные услуги</span>
             <h2>Всё для отдыха в одном месте</h2>
-            <p className="lead">К бане — кафе русской и кавказской кухни, открытый бассейн, мини-гостиница, парильщики, массажист и СПА-программа для девушек.</p>
+            <p className="lead">К бане — кафе русской и кавказской кухни, открытый бассейн, парильщики, массажист и СПА-программа для девушек.</p>
           </div>
           <div className="svc-grid">
             {services.map((s) => (

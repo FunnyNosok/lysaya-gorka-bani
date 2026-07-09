@@ -22,6 +22,9 @@ export async function PUT(req: NextRequest) {
     }
     await saveService(body);
     revalidatePath('/', 'layout');
+    revalidatePath('/admin/services');
+    revalidatePath(`/admin/services/${body.slug}`);
+    revalidatePath(`/uslugi/${body.slug}`);
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {

@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { SiteSettings } from '@/data/settings';
 
 export function SettingsEditor({ initial }: { initial: SiteSettings }) {
+  const router = useRouter();
   const [form, setForm] = useState<SiteSettings>(initial);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
@@ -23,6 +25,7 @@ export function SettingsEditor({ initial }: { initial: SiteSettings }) {
       });
       if (res.ok) {
         setSaved(true);
+        router.refresh();
       } else {
         const data = await res.json();
         setError(data.error || 'Ошибка сохранения');

@@ -130,6 +130,7 @@ export function PostEditor({ post, existingSlugs }: Props) {
         startTransition(() => router.push(`/admin/posts/${data.post.id}`));
       } else {
         setForm((f) => ({ ...f, ...data.post }));
+        router.refresh();
       }
     } catch {
       setError('Не удалось сохранить. Проверьте подключение KV.');

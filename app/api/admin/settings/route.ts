@@ -24,6 +24,7 @@ export async function PUT(req: NextRequest) {
     }
     await saveSettings(parsed.data);
     revalidatePath('/', 'layout');
+    revalidatePath('/admin/settings');
     return NextResponse.json({ ok: true, settings: parsed.data });
   } catch (e) {
     if (e instanceof Error && e.message === 'Unauthorized') {
