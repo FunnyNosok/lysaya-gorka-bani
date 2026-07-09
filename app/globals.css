@@ -531,13 +531,14 @@ body.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
   .nav>a,.nav .has-sub>a{
     padding:16px 8px;font-size:1.08rem;border-bottom:1px solid rgba(245,235,214,.08);
     display:flex;align-items:center;justify-content:space-between;
+    color:var(--cream);
   }
   .nav .has-sub>a::after{float:none;margin:0;font-size:.7em}
   .submenu{
     position:static;opacity:1;visibility:visible;transform:none;
     background:transparent;border:0;box-shadow:none;padding:2px 0 6px 18px;
   }
-  .submenu a{padding:12px 10px;font-size:.96rem;border-bottom:1px solid rgba(245,235,214,.05)}
+  .submenu a{padding:12px 10px;font-size:.96rem;border-bottom:1px solid rgba(245,235,214,.05);color:rgba(245,235,214,.7)}
 
   /* contacts inside mobile nav */
   .nav-contacts{
