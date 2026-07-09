@@ -93,7 +93,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 </div>
               )}
               <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
+                {s.slug === 'kafe' ? (
+                  <a className="btn btn--ember btn--lg" href="#menu">{s.ctaText}</a>
+                ) : (
+                  <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
+                )}
                 {tgHref(settings) && (
                   <a className="btn btn--tg btn--lg" href={tgHref(settings)} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
                 )}
@@ -118,7 +122,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       )}
 
       {s.menuImages && s.menuImages.length > 0 && (
-        <section className="section">
+        <section className="section" id="menu">
           <div className="container">
             <div className="section-head section-head--center reveal">
               <span className="eyebrow eyebrow--center">Меню кафе</span>

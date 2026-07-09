@@ -20,7 +20,7 @@ const nextConfig = {
       { source: '/uslugi/index.html', destination: '/uslugi', permanent: true },
       { source: '/uslugi/kafe.html', destination: '/uslugi/kafe', permanent: true },
       { source: '/uslugi/bassejn.html', destination: '/uslugi/bassejn', permanent: true },
-      { source: '/uslugi/mini-gostinitsa.html', destination: '/uslugi/mini-gostinitsa', permanent: true },
+      { source: '/uslugi/mini-gostinitsa.html', destination: '/uslugi/parilshchika', permanent: true },
       { source: '/uslugi/parilshchika.html', destination: '/uslugi/parilshchika', permanent: true },
       { source: '/uslugi/massazh.html', destination: '/uslugi/massazh', permanent: true },
       { source: '/uslugi/spa.html', destination: '/uslugi/spa', permanent: true },
