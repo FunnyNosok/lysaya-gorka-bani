@@ -30,41 +30,6 @@ export function ServiceEditor({ initial }: { initial: Service }) {
     }
   }
 
-  async function handleMenuUpload(files: File[]) {
-    setUploading(true);
-    try {
-      const uploaded: string[] = [];
-      for (const file of files) {
-        const fd = new FormData();
-        fd.append('file', file);
-        const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-        const data = await res.json();
-        if (res.ok && data.path) uploaded.push(data.path);
-        else setError(data.error || 'Ошибка загрузки');
-      }
-      if (uploaded.length) {
-        setForm((f) => ({ ...f, menuImages: [...(f.menuImages || []), ...uploaded] }));
-        setSaved(false);
-      }
-    } catch {
-      setError('Не удалось загрузить изображение');
-    } finally {
-      setUploading(false);
-    }
-  }
-
-  function removeMenuImage(index: number) {
-    set('menuImages', (form.menuImages || []).filter((_, i) => i !== index));
-  }
-
-  function moveMenuImage(index: number, dir: -1 | 1) {
-    const imgs = [...(form.menuImages || [])];
-    const target = index + dir;
-    if (target < 0 || target >= imgs.length) return;
-    [imgs[index], imgs[target]] = [imgs[target], imgs[index]];
-    set('menuImages', imgs);
-  }
-
   async function save() {
     setError('');
     try {
@@ -127,24 +92,6 @@ export function ServiceEditor({ initial }: { initial: Service }) {
             {form.detailImage && <img src={form.detailImage} alt="" style={{ width: '100%', borderRadius: '8px', marginBottom: '8px', maxHeight: '100px', objectFit: 'cover' }} />}
             <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f, 'detailImage'); }} disabled={uploading} />
           </div>
-        </div>
-
-        <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.15rem', margin: '20px 0 14px' }}>Меню (фото)</h3>
-        <p className="form-note" style={{ marginBottom: '10px' }}>
-          Фотографии страниц меню. Показываются блоком «Наше меню» внизу страницы услуги — блок виден, только если добавлено хотя бы одно фото.
-        </p>
-        {(form.menuImages || []).map((img, i) => (
-          <div key={`${img}-${i}`} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-            <img src={img} alt="" style={{ width: '90px', height: '64px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--line)', flex: '0 0 auto' }} />
-            <span style={{ fontSize: '.8rem', color: 'var(--ink-soft)', flex: '1 1 auto', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Страница {i + 1}</span>
-            <button type="button" onClick={() => moveMenuImage(i, -1)} disabled={i === 0 || uploading} title="Выше" style={{ padding: '6px 10px', border: '1px solid var(--line)', borderRadius: '6px', background: '#fff', cursor: 'pointer' }}>↑</button>
-            <button type="button" onClick={() => moveMenuImage(i, 1)} disabled={i === (form.menuImages || []).length - 1 || uploading} title="Ниже" style={{ padding: '6px 10px', border: '1px solid var(--line)', borderRadius: '6px', background: '#fff', cursor: 'pointer' }}>↓</button>
-            <button type="button" onClick={() => removeMenuImage(i)} disabled={uploading} style={{ padding: '6px 10px', border: '1px solid var(--ember)', borderRadius: '6px', background: '#fff', color: 'var(--ember-deep)', cursor: 'pointer' }}>Удалить</button>
-          </div>
-        ))}
-        <div style={{ marginBottom: '14px' }}>
-          <label>Добавить фото меню (можно несколько сразу)</label>
-          <input type="file" accept="image/*" multiple onChange={(e) => { const files = Array.from(e.target.files || []); e.target.value = ''; if (files.length) handleMenuUpload(files); }} disabled={uploading} />
         </div>
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.15rem', margin: '20px 0 14px' }}>Текст</h3>

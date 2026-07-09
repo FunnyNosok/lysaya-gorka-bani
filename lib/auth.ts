@@ -1,9 +1,7 @@
 import { cookies } from 'next/headers';
 import crypto from 'crypto';
-import { kv, isKvAvailable } from './kv';
 
 const SESSION_COOKIE = 'lg_admin_session';
-const CREDENTIALS_KEY = 'admin:credentials';
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 
 // In-memory rate limiter for login attempts
@@ -57,61 +55,6 @@ function safeCompare(a: string, b: string): boolean {
   return crypto.timingSafeEqual(bufA, bufB);
 }
 
-// Учётные данные, изменённые через админку, хранятся в KV (пароль — scrypt-хеш).
-// Если в KV их нет — используются ADMIN_LOGIN/ADMIN_PASSWORD из окружения.
-type StoredCredentials = { login: string; passwordHash: string; salt: string };
-
-function hashPassword(password: string, salt: string): string {
-  return crypto.scryptSync(password, salt, 64).toString('hex');
-}
-
-async function getStoredCredentials(): Promise<StoredCredentials | null> {
-  if (!isKvAvailable()) return null;
-  try {
-    const c = await kv().get<StoredCredentials>(CREDENTIALS_KEY);
-    if (c && c.login && c.passwordHash && c.salt) return c;
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-async function verifyCredentials(loginValue: string, password: string): Promise<boolean> {
-  const stored = await getStoredCredentials();
-  if (stored) {
-    const loginOk = safeCompare(loginValue, stored.login);
-    const passOk = safeCompare(hashPassword(password, stored.salt), stored.passwordHash);
-    return loginOk && passOk;
-  }
-  const loginOk = safeCompare(loginValue, getAdminLogin());
-  const passOk = safeCompare(password, getAdminPassword());
-  return loginOk && passOk;
-}
-
-export async function getActiveLogin(): Promise<string> {
-  const stored = await getStoredCredentials();
-  return stored ? stored.login : getAdminLogin();
-}
-
-export async function changeCredentials(currentPassword: string, newLogin: string, newPassword: string): Promise<void> {
-  if (!isKvAvailable()) {
-    throw new Error('Хранилище данных (KV) не настроено — изменить логин и пароль можно только через переменные окружения ADMIN_LOGIN и ADMIN_PASSWORD.');
-  }
-  const stored = await getStoredCredentials();
-  const currentOk = stored
-    ? safeCompare(hashPassword(currentPassword, stored.salt), stored.passwordHash)
-    : safeCompare(currentPassword, getAdminPassword());
-  if (!currentOk) throw new Error('Текущий пароль указан неверно');
-
-  const salt = crypto.randomBytes(16).toString('hex');
-  const credentials: StoredCredentials = {
-    login: newLogin,
-    passwordHash: hashPassword(newPassword, salt),
-    salt,
-  };
-  await kv().set(CREDENTIALS_KEY, credentials);
-}
-
 export async function login(loginValue: string, password: string): Promise<boolean> {
   // Rate limit: check by IP-like key (we use the login value as key)
   const now = Date.now();
@@ -132,7 +75,9 @@ export async function login(loginValue: string, password: string): Promise<boole
   // Delay to slow down brute-force
   await new Promise((r) => setTimeout(r, LOGIN_DELAY_MS));
 
-  const ok = await verifyCredentials(loginValue, password);
+  const loginOk = safeCompare(loginValue, getAdminLogin());
+  const passOk = safeCompare(password, getAdminPassword());
+  const ok = loginOk && passOk;
 
   if (!ok) {
     const current = loginAttempts.get(key);

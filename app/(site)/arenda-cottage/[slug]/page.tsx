@@ -33,7 +33,7 @@ export default async function CottageDetailPage({ params }: { params: Promise<{ 
     otherCottage && { href: `/arenda-cottage/${otherCottage.slug}`, title: otherCottage.title, mp: `${otherCottage.capacityLabel} · ${otherCottage.tag}` },
     c.slug === 'russkiy-domik' && banyas.find((b) => b.slug === 'russkiy-domik') && { href: `/arenda-ban/russkiy-domik`, title: 'Баня «Русский домик»', mp: `от ${banyas.find((b) => b.slug === 'russkiy-domik')!.priceFromLabel} · 10 человек` },
     c.slug === 'tsarskie-khoromy' && tsarsBanya && { href: `/arenda-ban/tsarskie-khoromy`, title: 'Баня «Царские хоромы»', mp: `от ${tsarsBanya.priceFromLabel} · 20 человек` },
-    { href: c.slug === 'tsarskie-khoromy' ? '/uslugi/kafe' : '/uslugi/parilshchika', title: c.slug === 'tsarskie-khoromy' ? 'Кафе' : 'Парильщик', mp: c.slug === 'tsarskie-khoromy' ? 'Русская и кавказская кухня' : '10+ видов парения' },
+    { href: c.slug === 'tsarskie-khoromy' ? '/uslugi/kafe' : '/uslugi/mini-gostinitsa', title: c.slug === 'tsarskie-khoromy' ? 'Кафе' : 'Мини-гостиница', mp: c.slug === 'tsarskie-khoromy' ? 'Русская и кавказская кухня' : 'Уютные номера для гостей' },
   ].filter(Boolean) as { href: string; title: string; mp: string }[];
 
   return (

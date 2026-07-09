@@ -12,7 +12,6 @@ const ADMIN_NAV = [
   { href: '/admin/posts', label: 'Акции и статьи' },
   { href: '/admin/bookings', label: 'Заявки' },
   { href: '/admin/settings', label: 'Настройки' },
-  { href: '/admin/account', label: 'Доступ' },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
