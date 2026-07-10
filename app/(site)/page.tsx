@@ -16,11 +16,11 @@ export default async function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-bg"><img src="/images/ban/main-12.jpg" alt="Русская баня на Лысой горе" /></div>
+        <div className="hero-bg"><img src="/images/ban/main-12.jpg" alt="Русские бани Лысая Горка" /></div>
         <div className="steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <div className="hero-inner container">
           <span className="eyebrow">Оздоровительный комплекс · Екатеринбург</span>
-          <h1>Русские бани <em>на Лысой горе</em></h1>
+          <h1>Русские бани <em>Лысая Горка</em></h1>
           <p className="hero-sub">Настоящая баня на дровах, ароматные веники, профессиональные парильщики и уютная территория с бассейном и кафе. Отдохните с удовольствием — лёгкого вам пара!</p>
           <div className="hero-actions">
             <a className="btn btn--ember btn--lg" href="#bani">Выбрать баню</a>
@@ -85,7 +85,7 @@ export default async function HomePage() {
           <div className="section-head section-head--center reveal">
             <span className="eyebrow eyebrow--center">Дополнительные услуги</span>
             <h2>Всё для отдыха в одном месте</h2>
-            <p className="lead">К бане — кафе русской и кавказской кухни, открытый бассейн, парильщики, массажист и СПА-программа для девушек.</p>
+            <p className="lead">К бане — кафе с русской кухней, открытый бассейн, парильщики и массажист.</p>
           </div>
           <div className="svc-grid">
             {services.map((s) => (
@@ -137,7 +137,7 @@ export default async function HomePage() {
             <figure><img data-lightbox data-full="/images/ban/russkiy/IMG_7096.jpg" src="/images/ban/russkiy/IMG_7096.jpg" alt="Парилка" /></figure>
             <figure><img data-lightbox data-full="/images/services/kafe.jpg" src="/images/services/kafe.jpg" alt="Кафе" /></figure>
             <figure className="w2"><img data-lightbox data-full="/images/cottages/tsarskie-khoromy.jpg" src="/images/cottages/tsarskie-khoromy.jpg" alt="Царские хоромы" /></figure>
-            <figure><img data-lightbox data-full="/images/services/spa.jpg" src="/images/services/spa.jpg" alt="СПА" /></figure>
+            <figure><img data-lightbox data-full="/images/services/bassejn-detail.jpg" src="/images/services/bassejn-detail.jpg" alt="Открытый бассейн" /></figure>
             <figure><img data-lightbox data-full="/images/ban/morskoy-domik.jpg" src="/images/ban/morskoy-domik.jpg" alt="Морской домик" /></figure>
           </div>
         </div>

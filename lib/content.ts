@@ -26,6 +26,96 @@ const KEYS = {
 
 const POST_LIST_KEY = 'posts:list';
 
+const CORRECT_PHONE2 = {
+  phone2: '+7 (953) 047-75-77',
+  phone2Href: '+79530477577',
+};
+
+function normalizeSettings(settings: SiteSettings): SiteSettings {
+  return { ...settings, ...CORRECT_PHONE2 };
+}
+
+function normalizeServices(services: Service[]): Service[] {
+  return services
+    .filter((s) => s.slug !== 'spa' && s.slug !== 'mini-gostinitsa')
+    .map((s) => {
+      if (s.slug !== 'kafe') return s;
+      return {
+        ...s,
+        cardDescription: 'Русская кухня, аренда кафе на день.',
+        heroTitle: 'Русская кухня',
+        heroDescription: '',
+        bodyIntro: 'Территория оздоровительного комплекса «Русские бани Лысая Горка» — это не только русские бани. Здесь есть уютное кафе с русской кухней.',
+        sections: [
+          {
+            heading: 'Меню включает',
+            items: [
+              'Шашлык из свинины и курицы.',
+              'Терпуг и скумбрия горячего копчения.',
+              'Стейк сёмги на гриле.',
+              'Холодные закуски и салаты.',
+              'Супы.',
+              'Горячие блюда.',
+              'Десерты и напитки.',
+            ],
+          },
+          ...(s.sections || []).filter((sec) => sec.heading !== 'Меню включает' && sec.heading !== 'Выгодная аренда кафе для любого случая'),
+        ],
+        ctaText: 'Смотреть меню',
+        seoTitle: 'Кафе с русской кухней в бане | Лысая Горка, Екатеринбург',
+        seoDescription: 'Уютное кафе в комплексе Русские бани Лысая Горка: русская кухня, шашлык из свинины и курицы, рыба горячего копчения, стейк сёмги на гриле. Аренда кафе на день.',
+      };
+    });
+}
+
+function normalizeBanyas(banyas: Banya[]): Banya[] {
+  return banyas.map((b) => {
+    if (b.slug !== 'russkiy-domik') return b;
+    return {
+      ...b,
+      shortDescription: b.shortDescription.replace(/,?\s*караоке/gi, ''),
+      features: ['Парилка', 'Купель', 'Камин', 'Комната отдыха', 'Услуги кафе'],
+      detailFeats: ['Парилка', 'Купель', 'ТВ · НТВ+', 'Камин', 'Комната отдыха', 'Услуги кафе', 'Веранда', 'Мангал', 'Сейф', '2 этажа'],
+      intro: b.intro.replace('спеть с друзьями караоке, ', '').replace('караоке, ', ''),
+      extraServicesText: b.extraServicesText.replace(/аренда банкетного зала\.?/gi, '').replace(/\s+,/g, ',').replace(/\s+\./, '.'),
+      seoDescription: 'Баня Русский домик в Екатеринбурге: вместимость 10 человек, парилка, купель, камин, комната отдыха, веранда. Аренда от 1850 руб/час.',
+    };
+  });
+}
+
+function normalizeCottages(cottages: Cottage[]): Cottage[] {
+  return cottages.map((c) => {
+    if (c.slug === 'tsarskie-khoromy') {
+      return {
+        ...c,
+        features: c.features.map((f) => f === '4 комнаты' ? '12 спальных мест' : f),
+        heroDescription: c.heroDescription.replace('4 комнаты отдыха', '12 спальных мест с возможностью размещения дополнительных гостей'),
+        hasItems: c.hasItems.map((item) => item === '4 комнаты отдыха на втором этаже.' ? '12 спальных мест с возможностью размещения дополнительных гостей.' : item),
+        detailFeats: c.detailFeats.map((f) => f === '4 комнаты' ? '12 спальных мест' : f),
+        priceTable: [
+          { label: 'Будни', value: '18 900 ₽/сутки' },
+          { label: 'Выходные и праздники', value: '28 900 ₽/сутки' },
+          { label: 'Дополнительные гости', value: '1 000 ₽/сутки' },
+        ],
+        priceNote: '',
+        extraServicesText: c.extraServicesText.replace(/^кафе с\s*/i, '').replace(/кавказской\s*/gi, ''),
+      };
+    }
+    if (c.slug === 'russkiy-domik') {
+      return {
+        ...c,
+        priceTable: [
+          { label: 'Будни', value: '13 900 ₽/сут' },
+          { label: 'Выходные и праздники', value: '16 900 ₽/сут' },
+        ],
+        priceNote: 'Аренда коттеджа на сутки.',
+        extraServicesText: c.extraServicesText.replace(/^кафе с\s*/i, ''),
+      };
+    }
+    return c;
+  });
+}
+
 // Один раз переносит стартовые (seed) посты в KV. Без этого при добавлении
 // первого поста через админку список переставал быть пустым и стартовые
 // акции/статьи пропадали с сайта. Добавляем только те id, которых ещё нет,
@@ -46,9 +136,9 @@ async function ensurePostsSeeded(): Promise<void> {
 }
 
 export async function getSettings(): Promise<SiteSettings> {
-  if (!isKvAvailable()) return defaultSettings;
+  if (!isKvAvailable()) return normalizeSettings(defaultSettings);
   const raw = await kv().get<SiteSettings>(KEYS.settings);
-  return { ...defaultSettings, ...(raw || {}) };
+  return normalizeSettings({ ...defaultSettings, ...(raw || {}) });
 }
 
 export async function saveSettings(settings: SiteSettings): Promise<void> {
@@ -159,9 +249,9 @@ export async function updateBookingStatus(id: string, status: Booking['status'])
 
 // ─── Banyas ───
 export async function getAllBanyas(): Promise<Banya[]> {
-  if (!isKvAvailable()) return seedBanyas;
+  if (!isKvAvailable()) return normalizeBanyas(seedBanyas);
   const raw = await kv().get<Banya[]>(KEYS.banyas);
-  return raw && raw.length ? raw : seedBanyas;
+  return normalizeBanyas(raw && raw.length ? raw : seedBanyas);
 }
 
 export async function getBanyaBySlug(slug: string): Promise<Banya | null> {
@@ -180,9 +270,9 @@ export async function saveBanya(banya: Banya): Promise<void> {
 
 // ─── Cottages ───
 export async function getAllCottages(): Promise<Cottage[]> {
-  if (!isKvAvailable()) return seedCottages;
+  if (!isKvAvailable()) return normalizeCottages(seedCottages);
   const raw = await kv().get<Cottage[]>(KEYS.cottages);
-  return raw && raw.length ? raw : seedCottages;
+  return normalizeCottages(raw && raw.length ? raw : seedCottages);
 }
 
 export async function getCottageBySlug(slug: string): Promise<Cottage | null> {
@@ -201,9 +291,9 @@ export async function saveCottage(cottage: Cottage): Promise<void> {
 
 // ─── Services ───
 export async function getAllServices(): Promise<Service[]> {
-  if (!isKvAvailable()) return seedServices;
+  if (!isKvAvailable()) return normalizeServices(seedServices);
   const raw = await kv().get<Service[]>(KEYS.services);
-  return raw && raw.length ? raw : seedServices;
+  return normalizeServices(raw && raw.length ? raw : seedServices);
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | null> {

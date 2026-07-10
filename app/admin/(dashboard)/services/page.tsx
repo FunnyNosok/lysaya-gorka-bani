@@ -10,7 +10,7 @@ export default async function AdminServicesPage() {
     <div>
       <h1 style={{ fontFamily: 'var(--ff-display)', fontSize: '2rem', marginBottom: '8px' }}>Услуги</h1>
       <p style={{ color: 'var(--ink-soft)', fontSize: '.9rem', marginBottom: '24px' }}>
-        Редактирование услуг: кафе, парильщик, массаж, бассейн, СПА и др. Меню, цены, программы.
+        Редактирование услуг: кафе, парильщик, массаж, бассейн и др. Меню, цены, программы.
       </p>
       <div style={{ display: 'grid', gap: '14px', maxWidth: '600px' }}>
         {services.map((s) => (

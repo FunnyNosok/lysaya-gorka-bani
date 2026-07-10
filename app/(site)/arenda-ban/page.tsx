@@ -6,7 +6,7 @@ import { defaultSettings } from '@/data/settings';
 import { ContactButtons } from '@/components/Contact';
 
 export const metadata: Metadata = {
-  title: 'Аренда русской бани в Екатеринбурге — бани «Лысой горки»',
+  title: 'Аренда русской бани в Екатеринбурге — бани «Лысой Горки»',
   description: 'Аренда бани в Екатеринбурге: Русский домик, Лесной домик, Морской домик, Царские хоромы. Цены от 1100 до 4500 руб/час, вместимость 5–20 человек.',
 };
 
@@ -63,7 +63,7 @@ export default async function BanyasPage() {
           </div>
           <div className="svc-grid">
             <Link className="svc-card reveal" href="/uslugi/parilshchika"><img src="/images/services/parilshchik.jpg" alt="" /><div className="svc-card__body"><h3>Парильщик</h3><p>10+ видов парения</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
-            <Link className="svc-card reveal" href="/uslugi/kafe"><img src="/images/services/kafe.jpg" alt="" /><div className="svc-card__body"><h3>Кафе</h3><p>Русская и кавказская кухня</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
+            <Link className="svc-card reveal" href="/uslugi/kafe"><img src="/images/services/kafe.jpg" alt="" /><div className="svc-card__body"><h3>Кафе</h3><p>Русская кухня</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
             <Link className="svc-card reveal" href="/uslugi/bassejn"><img src="/images/services/bassejn-detail.jpg" alt="" /><div className="svc-card__body"><h3>Бассейн</h3><p>Открытый, на улице</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
           </div>
         </div>

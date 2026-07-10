@@ -2,7 +2,7 @@ export function JsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'Русские бани «Лысая горка»',
+    name: 'Оздоровительный комплекс «Русские бани Лысая Горка»',
     description: 'Русские бани на дровах в Екатеринбурге. Аренда бани на час и сутки. Парильщики, массаж, кафе, бассейн.',
     image: 'https://nagorke.ru/images/ban/main-12.jpg',
     url: 'https://nagorke.ru',

@@ -74,7 +74,7 @@ export function SettingsEditor({ initial }: { initial: SiteSettings }) {
           </div>
           <div className="field" style={{ marginBottom: 0 }}>
             <label>Телефон 2 (tel:)</label>
-            <input value={form.phone2Href} onChange={(e) => set('phone2Href', e.target.value)} style={inputStyle} placeholder="+79530477757" />
+            <input value={form.phone2Href} onChange={(e) => set('phone2Href', e.target.value)} style={inputStyle} placeholder="+79530477577" />
           </div>
         </div>
 

@@ -52,7 +52,7 @@ function LoginForm() {
       }}>
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div style={{ fontFamily: 'var(--ff-display)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--wood)' }}>
-            Лысая горка
+            Лысая Горка
           </div>
           <div style={{ fontFamily: 'var(--ff-script)', color: 'var(--ember)', fontSize: '1rem' }}>
             панель администратора

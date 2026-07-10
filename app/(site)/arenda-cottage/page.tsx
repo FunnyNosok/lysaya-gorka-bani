@@ -6,8 +6,8 @@ import { defaultSettings } from '@/data/settings';
 import { ContactButtons } from '@/components/Contact';
 
 export const metadata: Metadata = {
-  title: 'Аренда коттеджа в Екатеринбурге — коттеджи «Лысой горки»',
-  description: 'Аренда коттеджей в Екатеринбурге на территории комплекса Лысая горка: Царские хоромы и Русский домик для корпоративов, свадеб, юбилеев.',
+  title: 'Аренда коттеджа в Екатеринбурге — коттеджи «Лысой Горки»',
+  description: 'Аренда коттеджей в Екатеринбурге на территории комплекса Лысая Горка: Царские хоромы и Русский домик для корпоративов, свадеб, юбилеев.',
 };
 
 export default async function CottagesPage() {
@@ -23,7 +23,7 @@ export default async function CottagesPage() {
           <nav className="breadcrumb"><Link href="/">Главная</Link><span>/</span>Коттеджи</nav>
           <span className="eyebrow">Коттеджи</span>
           <h1>Аренда коттеджа в Екатеринбурге</h1>
-          <p>Два коттеджа на территории комплекса «Лысая горка» — для корпоративов, свадеб, юбилеев и вечеринок. Большая компания или отдельные гости — подберём вариант под ваш повод.</p>
+          <p>Два коттеджа на территории комплекса «Лысая Горка» — для корпоративов, свадеб, юбилеев и вечеринок. Большая компания или отдельные гости — подберём вариант под ваш повод.</p>
         </div>
       </section>
 
@@ -56,7 +56,7 @@ export default async function CottagesPage() {
         <div className="container">
           <div className="section-head section-head--center reveal"><span className="eyebrow eyebrow--center">К коттеджу</span><h2>Дополнительные услуги</h2></div>
           <div className="svc-grid">
-            <Link className="svc-card reveal" href="/uslugi/kafe"><img src="/images/services/kafe.jpg" alt="" /><div className="svc-card__body"><h3>Кафе</h3><p>Русская и кавказская кухня</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
+            <Link className="svc-card reveal" href="/uslugi/kafe"><img src="/images/services/kafe.jpg" alt="" /><div className="svc-card__body"><h3>Кафе</h3><p>Русская кухня</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
             <Link className="svc-card reveal" href="/uslugi/parilshchika"><img src="/images/services/parilshchik.jpg" alt="" /><div className="svc-card__body"><h3>Парильщик</h3><p>10+ видов парения</p><span className="svc-card__link">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span></div></Link>
           </div>
         </div>

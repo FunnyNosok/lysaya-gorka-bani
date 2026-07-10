@@ -40,7 +40,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </nav>
           <span className="eyebrow">{s.heroEyebrow}</span>
           <h1>{s.heroTitle}</h1>
-          <p>{s.heroDescription}</p>
+          {s.heroDescription ? <p>{s.heroDescription}</p> : null}
         </div>
       </section>
 
@@ -75,6 +75,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   {sec.heading && <h4>{sec.heading}</h4>}
                   {sec.items && <ul>{sec.items.map((item) => <li key={item}>{item}</li>)}</ul>}
                   {sec.text && <p>{sec.text}</p>}
+                  {s.slug === 'kafe' && i === 0 && (
+                    <a className="btn btn--ember btn--lg" href="#menu" style={{ marginTop: '10px' }}>{s.ctaText}</a>
+                  )}
                 </div>
               ))}
               {s.plaque && (
@@ -93,9 +96,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 </div>
               )}
               <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                {s.slug === 'kafe' ? (
-                  <a className="btn btn--ember btn--lg" href="#menu">{s.ctaText}</a>
-                ) : (
+                {s.slug !== 'kafe' && (
                   <a className="btn btn--ember btn--lg" href={`tel:${settings.phone2Href}`}>{s.ctaText}</a>
                 )}
                 {tgHref(settings) && (

@@ -34,7 +34,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         borderBottom: '1px solid rgba(200,137,58,.22)',
       }}>
         <Link href="/admin" style={{ color: 'var(--cream)', fontFamily: 'var(--ff-display)', fontWeight: 700, fontSize: '1.1rem' }}>
-          Лысая горка · Админка
+          Лысая Горка · Админка
         </Link>
         <AdminNav items={ADMIN_NAV} />
         <a

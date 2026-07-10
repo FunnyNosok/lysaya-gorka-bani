@@ -6,8 +6,8 @@ import { defaultSettings } from '@/data/settings';
 import { tgHref } from '@/components/Contact';
 
 export const metadata: Metadata = {
-  title: 'Отзывы — русские бани «Лысая горка», Екатеринбург',
-  description: 'Отзывы гостей бани Лысая горка в Екатеринбурге о банях, парильщиках, кафе и отдыхе.',
+  title: 'Отзывы — русские бани «Лысая Горка», Екатеринбург',
+  description: 'Отзывы гостей бани Лысая Горка в Екатеринбурге о банях, парильщиках, кафе и отдыхе.',
 };
 
 export default async function ReviewsPage() {

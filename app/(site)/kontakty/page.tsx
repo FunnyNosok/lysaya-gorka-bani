@@ -5,8 +5,8 @@ import { getSettings } from '@/lib/content';
 import { defaultSettings } from '@/data/settings';
 
 export const metadata: Metadata = {
-  title: 'Контакты — русские бани «Лысая горка», Екатеринбург',
-  description: 'Контакты бани Лысая горка: Екатеринбург, Предельная, 41. Телефон +7 (343) 213-75-77, Telegram, MAX, почта, карта, соцсети.',
+  title: 'Контакты — русские бани «Лысая Горка», Екатеринбург',
+  description: 'Контакты бани Лысая Горка: Екатеринбург, Предельная, 41. Телефон +7 (343) 213-75-77, Telegram, MAX, почта, карта, соцсети.',
 };
 
 export default async function ContactsPage() {
@@ -23,7 +23,7 @@ export default async function ContactsPage() {
           <nav className="breadcrumb"><Link href="/">Главная</Link><span>/</span>Контакты</nav>
           <span className="eyebrow">Контакты</span>
           <h1>Свяжитесь с нами</h1>
-          <p>Оздоровительный комплекс русских бань «Лысая горка». Звоните, пишите в Telegram или MAX, или приезжайте — всегда рады гостям.</p>
+          <p>Оздоровительный комплекс русских бань «Лысая Горка». Звоните, пишите в Telegram или MAX, или приезжайте — всегда рады гостям.</p>
         </div>
       </section>
 

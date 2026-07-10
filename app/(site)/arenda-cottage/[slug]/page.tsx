@@ -33,7 +33,7 @@ export default async function CottageDetailPage({ params }: { params: Promise<{ 
     otherCottage && { href: `/arenda-cottage/${otherCottage.slug}`, title: otherCottage.title, mp: `${otherCottage.capacityLabel} · ${otherCottage.tag}` },
     c.slug === 'russkiy-domik' && banyas.find((b) => b.slug === 'russkiy-domik') && { href: `/arenda-ban/russkiy-domik`, title: 'Баня «Русский домик»', mp: `от ${banyas.find((b) => b.slug === 'russkiy-domik')!.priceFromLabel} · 10 человек` },
     c.slug === 'tsarskie-khoromy' && tsarsBanya && { href: `/arenda-ban/tsarskie-khoromy`, title: 'Баня «Царские хоромы»', mp: `от ${tsarsBanya.priceFromLabel} · 20 человек` },
-    { href: '/uslugi/kafe', title: 'Кафе', mp: 'Русская и кавказская кухня' },
+    { href: '/uslugi/kafe', title: 'Кафе', mp: 'Русская кухня' },
   ].filter(Boolean) as { href: string; title: string; mp: string }[];
 
   return (
@@ -65,7 +65,14 @@ export default async function CottageDetailPage({ params }: { params: Promise<{ 
                 {c.plankRows.map((r) => (
                   <div className="plank-row" key={r.label}><span>{r.label}</span><b>{r.value}</b></div>
                 ))}
-                <p className="note">{c.priceNote}</p>
+                {c.priceTable && (
+                  <div className="price-table" style={{ marginTop: '18px' }}>
+                    {c.priceTable.map((r) => (
+                      <div className="pr" key={r.label}><span>{r.label}</span><b>{r.value}</b></div>
+                    ))}
+                  </div>
+                )}
+                {c.priceNote ? <p className="note">{c.priceNote}</p> : null}
                 <BookingContact settings={settings} object={c.shortTitle} />
               </div>
             </aside>
@@ -78,7 +85,7 @@ export default async function CottageDetailPage({ params }: { params: Promise<{ 
             <ul>{c.hasItems.map((item) => <li key={item}>{item}</li>)}</ul>
             <ul className="detail-feats">{c.detailFeats.map((f) => <li key={f}>{f}</li>)}</ul>
             <h4>Дополнительные услуги</h4>
-            <p>К коттеджу — <Link href="/uslugi/kafe" style={{ color: 'var(--ember)', fontWeight: 700 }}>кафе</Link> с {c.extraServicesText}</p>
+            <p>К коттеджу — <Link href="/uslugi/kafe" style={{ color: 'var(--ember)', fontWeight: 700 }}>кафе</Link>: {c.extraServicesText}</p>
           </div>
         </div>
       </section>

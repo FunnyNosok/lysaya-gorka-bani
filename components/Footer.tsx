@@ -23,9 +23,9 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <div className="footer-brand">
             <Link href="/" className="brand">
               <span className="venik" aria-hidden="true">{VENIK_SVG}</span>
-              <span className="brand-text"><span className="brand-name">Лысая <b>горка</b></span><span className="brand-sub">русские бани</span></span>
+              <span className="brand-text"><span className="brand-name">Русские бани <b>Лысая Горка</b></span><span className="brand-sub">оздоровительный комплекс</span></span>
             </Link>
-            <p>Оздоровительный комплекс русских бань в Екатеринбурге. Пар на дровах, веники, парильщики, кафе и бассейн — отдых для тела и души.</p>
+            <p>Оздоровительный комплекс «Русские бани Лысая Горка» в Екатеринбурге. Пар на дровах, веники, парильщики, кафе и бассейн — отдых для тела и души.</p>
             <div className="socials">
               <a href={settings.vk} target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.8 16.8c-5 0-8.3-3.6-8.4-9.4h2.6c.1 4.3 2 6.1 3.4 6.5V7.4h2.5v3.7c1.4-.2 2.9-1.8 3.4-3.7h2.5c-.4 2.2-1.9 3.8-3 4.5 1.1.6 2.8 2 3.5 4.9h-2.7c-.5-1.8-1.9-3.2-3.7-3.4v3.4h-.4Z" /></svg>
@@ -69,8 +69,8 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {settings.yearFrom}–{year} Русские бани «Лысая горка». Екатеринбург.</span>
-          <span>Бани · Коттеджи · Кафе · СПА</span>
+          <span>© {settings.yearFrom}–{year} Русские бани Лысая Горка. Екатеринбург.</span>
+          <span>Бани · Коттеджи · Кафе</span>
         </div>
       </div>
     </footer>

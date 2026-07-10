@@ -96,6 +96,14 @@ export function CottageEditor({ initial }: { initial: Cottage }) {
 
         <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.15rem', margin: '20px 0 14px' }}>Цены и информация</h3>
         <div style={{ marginBottom: '14px' }}>
+          <label>Таблица цен (label | value, по одной на строку)</label>
+          <textarea
+            value={(form.priceTable || []).map((r) => `${r.label}|${r.value}`).join('\n')}
+            onChange={(e) => set('priceTable', e.target.value.split('\n').filter(Boolean).map((line) => { const [l, ...v] = line.split('|'); return { label: l?.trim() || '', value: v.join('|').trim() }; }))}
+            style={{ ...inputStyle, minHeight: '80px', fontFamily: 'monospace', fontSize: '.82rem' }}
+          />
+        </div>
+        <div style={{ marginBottom: '14px' }}>
           <label>Примечание к цене</label>
           <input value={form.priceNote} onChange={(e) => set('priceNote', e.target.value)} style={inputStyle} />
         </div>

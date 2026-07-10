@@ -20,8 +20,8 @@ export type SiteSettings = {
 export const defaultSettings: SiteSettings = {
   phone: '+7 (343) 213-75-77',
   phoneHref: '+73432137577',
-  phone2: '+7 (953) 047-77-57',
-  phone2Href: '+79530477757',
+  phone2: '+7 (953) 047-75-77',
+  phone2Href: '+79530477577',
   // Ссылки на мессенджеры. Заполняются в админке (Настройки).
   // Telegram: https://t.me/username · MAX: https://max.ru/u/<хеш из приложения>
   telegram: '',

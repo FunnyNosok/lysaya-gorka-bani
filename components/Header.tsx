@@ -28,10 +28,10 @@ export function Header({ settings, banyas = [], cottages = [], services = [] }: 
     <div className="header-wrap">
     <header className="site-header">
       <div className="header-inner">
-        <Link href="/" className="brand" aria-label="Лысая горка — на главную">
+        <Link href="/" className="brand" aria-label="Русские бани Лысая Горка — на главную">
           <span className="venik" aria-hidden="true">{VENIK_SVG}</span>
           <span className="brand-text">
-            <span className="brand-name">Лысая <b>горка</b></span>
+            <span className="brand-name">Лысая <b>Горка</b></span>
             <span className="brand-sub">русские бани</span>
           </span>
         </Link>
